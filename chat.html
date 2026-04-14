@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat - ANONYMOUS CHAT</title>
+  <!-- Font Awesome & Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+    body{background:#0b0e14;color:#e3e6eb;scroll-behavior:smooth}
+    .navbar{display:flex;align-items:center;justify-content:space-between;padding:0.9rem 2rem;background:rgba(18,22,28,0.85);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.05);position:sticky;top:0;z-index:1000}
+    .logo-area{display:flex;align-items:center;gap:14px}
+    .app-logo{width:46px;height:46px;border-radius:14px;overflow:hidden;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 40px rgba(0,0,0,0.25);background:#111}
+    .app-logo img{width:100%;height:100%;object-fit:cover;display:block}
+    .logo{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#a78bfa,#60a5fa);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .logo-sub{color:#9aa4b8;font-size:0.9rem;letter-spacing:2px}
+    .nav-links{display:flex;list-style:none;gap:2.2rem}
+    .nav-links a{text-decoration:none;color:#cbd5e1;font-weight:500;border-bottom:2px solid transparent;padding-bottom:4px;transition:0.2s}
+    .nav-links a:hover{color:#a78bfa;border-bottom-color:#a78bfa}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+    .navbar .ai-indicator{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#8b5cf6,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:white;cursor:pointer;z-index:10}
+    section{scroll-margin-top:90px;margin-bottom:4rem}
+    h1{font-size:2.5rem;font-weight:600;background:linear-gradient(to right,#e0e7ff,#bdd3ff);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:1.5rem}
+    .chat-header-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;flex-wrap:wrap;gap:1rem}
+    .room-badge{background:#1e2a36;padding:6px 14px;border-radius:40px;font-size:0.9rem;display:flex;align-items:center;gap:8px}
+    .chat-container{background:linear-gradient(180deg,rgba(15,20,26,0.98),rgba(10,14,20,0.98));-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:32px;border:1px solid rgba(79,70,229,0.18);box-shadow:0 24px 80px rgba(0,0,0,0.22);height:650px;max-height:80vh;display:flex;flex-direction:column;overflow:hidden}
+    .chat-header{padding:1rem 1.8rem;border-bottom:1px solid #2e3a48;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;background:linear-gradient(180deg,rgba(15,20,26,0.98),rgba(10,14,20,0.98))}
+    .chat-header .chat-title{display:flex;align-items:center;gap:0.8rem;font-weight:600;color:#e2e8f0}
+    .chat-header .chat-title i{font-size:1rem;color:#34d399}
+    .chat-status{color:#9aa4b8;font-size:0.95rem;display:flex;align-items:center;gap:0.5rem}
+    .typing-indicator{font-size:0.85rem;color:#a5b9ce;min-height:24px}
+    .messages-area{flex:1;overflow-y:auto;padding:1.5rem 1.8rem 0.8rem;display:flex;flex-direction:column;gap:12px;background:radial-gradient(circle at 10% 20%,#0f1722,#07121a);background-image:radial-gradient(circle at 20% 20%,rgba(255,255,255,0.05),transparent 26%),radial-gradient(circle at 80% 10%,rgba(79,70,229,0.12),transparent 18%),radial-gradient(circle at 40% 80%,rgba(34,197,94,0.12),transparent 20%),linear-gradient(180deg,#0f1722,#07121a)}
+    .message-bubble{max-width:72%;align-self:flex-start;display:flex;flex-direction:column;gap:8px}
+    .message-bubble.own{align-self:flex-end}
+    .bubble-content{background:#f8fafc;color:#0f1722;border:1px solid rgba(148,163,184,0.24);padding:14px 18px;border-radius:22px 22px 22px 6px;word-break:break-word;box-shadow:0 10px 24px rgba(0,0,0,0.08)}
+    .own .bubble-content{background:#25d366;border-color:rgba(37,211,102,0.3);border-radius:22px 22px 6px 22px;color:white}
+    .message-meta{display:flex;gap:8px;font-size:0.75rem;color:#8b99aa;margin-bottom:4px;padding:0 6px}
+    .ai-badge{background:#8b5cf6;color:white;font-size:0.7rem;padding:2px 8px;border-radius:30px;margin-left:8px}
+    .chat-input-area{display:flex;padding:1.2rem 1.8rem;background:#0f1722;border-top:1px solid #263445;gap:10px;align-items:center}
+    .input-wrapper{flex:1;display:flex;background:#1b2532;border:1px solid #374a5e;border-radius:60px;align-items:center;padding:0 6px 0 18px}
+    .input-wrapper input{flex:1;background:transparent;border:none;padding:14px 0;color:white;font-size:1rem;outline:none}
+    .emoji-btn,.sound-toggle,.voice-btn{background:transparent;border:none;color:#9aaec2;font-size:1.3rem;cursor:pointer;padding:8px;border-radius:50%;transition:0.2s}
+    .voice-btn{width:44px;height:44px;display:flex;align-items:center;justify-content:center}
+    .send-btn{background:#8b5cf6;border:none;color:white;padding:12px 24px;border-radius:60px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:8px;transition:0.2s}
+    .send-btn:hover{background:#a78bfa}
+    .settings-bar{display:flex;padding:0.8rem 1.8rem;background:#0f1722;border-top:1px solid #263445;gap:10px;align-items:center;flex-wrap:wrap}
+    .room-input-group{display:flex;gap:8px}
+    .room-input-group input{background:#1f2a37;border:1px solid #3f5568;border-radius:40px;padding:8px 16px;color:white;width:180px}
+    .btn-outline{background:#334155;border:none;border-radius:30px;padding:8px 16px;color:white;cursor:pointer;font-weight:500;transition:0.2s}
+    .btn-outline:hover{background:#475569}
+    .invite-link-btn{background:#4f46e5;border:none;border-radius:30px;padding:8px 16px;color:white;cursor:pointer;font-weight:500;display:flex;align-items:center;gap:8px;transition:0.2s}
+    .invite-link-btn:hover{background:#6366f1}
+    .message-bubble{animation:slideIn 0.3s ease-out}
+    @keyframes slideIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .own.message-bubble{animation:slideInRight 0.3s ease-out}
+    @keyframes slideInRight{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+    .emoji-picker{position:absolute;bottom:80px;left:20px;background:#1e293b;border:1px solid #3b4e62;border-radius:24px;padding:12px;display:none;grid-template-columns:repeat(8,1fr);gap:8px;z-index:100;box-shadow:0 10px 30px rgba(0,0,0,0.7)}
+    .emoji-picker span{font-size:1.6rem;cursor:pointer;padding:4px;border-radius:12px;transition:0.1s}
+    .private-nav{color:#34d399}
+    footer{text-align:center;padding:2rem;color:#6c7a8a}
+    /* Mobile */
+    @media (max-width:768px){
+      .navbar{padding:0.7rem 1rem}
+      .nav-links{display:none}
+      .hamburger{display:flex}
+      .hamburger.active .bar:nth-child(1){transform:rotate(-45deg) translate(-5px,6px)}
+      .hamburger.active .bar:nth-child(2){opacity:0}
+      .hamburger.active .bar:nth-child(3){transform:rotate(45deg) translate(-5px,-6px)}
+      .bar{width:25px;height:3px;background:#cbd5e1;border-radius:2px;transition:0.3s}
+      .nav-links.active{display:flex;position:fixed;left:0;top:70px;flex-direction:column;background:rgba(10,16,24,0.98);width:100%;padding:2rem 0;gap:2rem;text-align:center;z-index:999}
+    }
+    .private-nav{color:#34d399}
+    .chat-status-circle{color:#34d399;font-size:0.6rem}
+    .welcome-msg{color:#6b7f94;text-align:center;padding:20px}
+    .relative{position:relative}
+    .flex-center{display:flex;align-items:center;gap:8px}
+    .bold{font-weight:600}
+    .username-input{background:#1f2a37;border:1px solid #3f5568;border-radius:40px;padding:8px 16px;color:white;width:160px}
+    .sync-note{margin-top:1rem;color:#9aabbe}
+  </style>
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo-area">
+      <div class="app-logo"><img src="anonymous.jpg" alt="Anonymous App Logo"></div>
+      <div>
+        <div class="logo">ANONYMOUS</div>
+        <span class="logo-sub">CHAT AI</span>
+      </div>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="chat.html">Chat</a></li>
+      <li><a href="friends.html">Friends</a></li>
+      <li><a href="marketplace.html">Marketplace</a></li>
+      <li><a href="ai-labs.html">AI Labs</a></li>
+      <li><a href="#" id="privateNavBtn" class="private-nav"><i class="fas fa-lock"></i> Private</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </div>
+    <div class="ai-indicator" id="navbarAI" title="AI Assistant"><i class="fas fa-robot"></i></div>
+  </nav>
+
+  <section id="chat">
+    <div class="chat-header-bar">
+      <h1><i class="fas fa-comments"></i> anonymous room</h1>
+      <div class="room-badge">
+        <i class="fas fa-door-open"></i>
+        <span id="currentRoomDisplay"># general</span>
+      </div>
+      <button class="invite-link-btn" id="copyInviteBtn" title="Copy invite link">
+        <i class="fas fa-link"></i> Copy invite link
+      </button>
+    </div>
+
+    <div class="chat-container">
+      <div class="chat-header">
+        <div class="chat-title"><i class="fas fa-user-secret"></i><span id="connectionStatus">live broadcast</span></div>
+        <div>
+          <div class="typing-indicator" id="typingIndicator"></div>
+          <div class="chat-status"><i class="fas fa-circle chat-status-circle"></i> encrypted room</div>
+        </div>
+      </div>
+
+      <div class="messages-area" id="messagesArea">
+        <div class="welcome-msg">✨ Welcome! Tap the AI button to chat with our intelligent assistant. It can learn from conversations and fetch info!</div>
+      </div>
+
+      <div class="relative">
+        <div class="emoji-picker" id="emojiPicker"></div>
+      </div>
+
+      <div class="chat-input-area">
+        <div class="input-wrapper">
+          <input type="text" id="messageInput" placeholder="Type a message... (try @ai hello or ask about Gemini)" autocomplete="off" />
+          <button class="emoji-btn" id="emojiBtn" title="Emoji"><i class="far fa-smile"></i></button>
+        </div>
+        <button class="voice-btn" id="voiceBtn" title="Voice input"><i class="fas fa-microphone"></i></button>
+        <button class="send-btn" id="sendBtn" title="Send message"><i class="fas fa-paper-plane"></i></button>
+      </div>
+
+      <div class="settings-bar">
+        <div class="flex-center">
+          <i class="fas fa-user-astronaut"></i>
+          <span>You:</span>
+          <span id="currentUsernameDisplay" class="bold">AnonymousFox</span>
+        </div>
+        <input type="text" id="usernameInput" placeholder="new nickname" maxlength="20" class="username-input" />
+        <button class="btn-outline" id="saveNameBtn">Set name</button>
+        
+        <button class="sound-toggle" id="soundToggle" title="Toggle sound">
+          <i class="fas fa-volume-up"></i>
+        </button>
+
+        <button class="btn-outline" id="settingsBtn">Settings</button>
+
+        <div class="room-input-group">
+          <input type="text" id="roomInput" placeholder="room name" value="general" />
+          <button class="btn-outline" id="joinRoomBtn">Join room</button>
+        </div>
+      </div>
+    </div>
+    <p class="sync-note"><i class="fas fa-sync-alt"></i> Open multiple tabs to test – messages sync locally.</p>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 Anonymous Chat. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      hamburger.classList.toggle('active');
+    });
+
+    // Chat functionality (simplified for this page)
+    const messageInput = document.getElementById('messageInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const messagesArea = document.getElementById('messagesArea');
+    const usernameInput = document.getElementById('usernameInput');
+    const saveNameBtn = document.getElementById('saveNameBtn');
+    const currentUsernameDisplay = document.getElementById('currentUsernameDisplay');
+    const roomInput = document.getElementById('roomInput');
+    const joinRoomBtn = document.getElementById('joinRoomBtn');
+    const currentRoomDisplay = document.getElementById('currentRoomDisplay');
+    const copyInviteBtn = document.getElementById('copyInviteBtn');
+    const emojiBtn = document.getElementById('emojiBtn');
+    const emojiPicker = document.getElementById('emojiPicker');
+    const voiceBtn = document.getElementById('voiceBtn');
+    const soundToggle = document.getElementById('soundToggle');
+    const typingIndicator = document.getElementById('typingIndicator');
+
+    let currentUsername = localStorage.getItem('username') || 'AnonymousFox';
+    let currentRoom = localStorage.getItem('room') || 'general';
+    let soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
+
+    // Initialize
+    currentUsernameDisplay.textContent = currentUsername;
+    usernameInput.value = currentUsername;
+    roomInput.value = currentRoom;
+    currentRoomDisplay.textContent = '# ' + currentRoom;
+
+    // Emojis
+    const emojis = ['😀','😂','😍','🤔','😎','👍','👎','❤️','🔥','💯'];
+    emojis.forEach(emoji => {
+      const span = document.createElement('span');
+      span.textContent = emoji;
+      span.addEventListener('click', () => {
+        messageInput.value += emoji;
+        emojiPicker.style.display = 'none';
+      });
+      emojiPicker.appendChild(span);
+    });
+
+    // Send message
+    function sendMessage() {
+      const message = messageInput.value.trim();
+      if (message) {
+        addMessage(currentUsername, message, true);
+        messageInput.value = '';
+        // Simulate AI response if @ai
+        if (message.toLowerCase().includes('@ai')) {
+          setTimeout(() => {
+            addMessage('AI Assistant', 'Hello! How can I help you today?', false, true);
+          }, 1000);
+        }
+      }
+    }
+
+    sendBtn.addEventListener('click', sendMessage);
+    messageInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+
+    // Add message to UI
+    function addMessage(username, message, isOwn = false, isAI = false) {
+      const messageBubble = document.createElement('div');
+      messageBubble.className = `message-bubble ${isOwn ? 'own' : ''}`;
+      messageBubble.innerHTML = `
+        <div class="message-meta">
+          <span>${username}</span>
+          <span>${new Date().toLocaleTimeString()}</span>
+          ${isAI ? '<span class="ai-badge">AI</span>' : ''}
+        </div>
+        <div class="bubble-content">${message}</div>
+      `;
+      messagesArea.appendChild(messageBubble);
+      messagesArea.scrollTop = messagesArea.scrollHeight;
+    }
+
+    // Save name
+    saveNameBtn.addEventListener('click', () => {
+      const newName = usernameInput.value.trim();
+      if (newName) {
+        currentUsername = newName;
+        currentUsernameDisplay.textContent = currentUsername;
+        localStorage.setItem('username', currentUsername);
+      }
+    });
+
+    // Join room
+    joinRoomBtn.addEventListener('click', () => {
+      const newRoom = roomInput.value.trim();
+      if (newRoom) {
+        currentRoom = newRoom;
+        currentRoomDisplay.textContent = '# ' + currentRoom;
+        localStorage.setItem('room', currentRoom);
+        messagesArea.innerHTML = '<div style="color:#6b7f94; text-align:center; padding:20px;">Joined room #' + currentRoom + '</div>';
+      }
+    });
+
+    // Copy invite link
+    copyInviteBtn.addEventListener('click', () => {
+      const url = window.location.href.split('#')[0] + '#' + currentRoom;
+      navigator.clipboard.writeText(url).then(() => {
+        alert('Invite link copied!');
+      });
+    });
+
+    // Emoji picker
+    emojiBtn.addEventListener('click', () => {
+      emojiPicker.style.display = emojiPicker.style.display === 'grid' ? 'none' : 'grid';
+    });
+
+    // Sound toggle
+    soundToggle.addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      localStorage.setItem('soundEnabled', soundEnabled);
+      soundToggle.innerHTML = soundEnabled ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
+    });
+    soundToggle.innerHTML = soundEnabled ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
+
+    // Voice input (placeholder)
+    voiceBtn.addEventListener('click', () => {
+      alert('Voice input not implemented yet.');
+    });
+
+    // Load messages from localStorage (simplified)
+    const messages = JSON.parse(localStorage.getItem('messages_' + currentRoom) || '[]');
+    messages.forEach(msg => addMessage(msg.username, msg.message, msg.username === currentUsername, msg.isAI));
+  </script>
+</body>
+</html>
