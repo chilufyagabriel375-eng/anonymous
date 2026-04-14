@@ -1,0 +1,1874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ANONYMOUS CHAT · AI + Invites</title>
+  <!-- Font Awesome & Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif}
+    body{background:#0b0e14;color:#e3e6eb;scroll-behavior:smooth}
+    .navbar{display:flex;align-items:center;justify-content:space-between;padding:0.9rem 2rem;background:rgba(18,22,28,0.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.05);position:sticky;top:0;z-index:1000}
+    .logo-area{display:flex;align-items:center;gap:14px}
+    .app-logo{width:46px;height:46px;border-radius:14px;overflow:hidden;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 40px rgba(0,0,0,0.25);background:#111}
+    .app-logo img{width:100%;height:100%;object-fit:cover;display:block}
+    .logo{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#a78bfa,#60a5fa);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .logo-sub{color:#9aa4b8;font-size:0.9rem;letter-spacing:2px}
+    .nav-links{display:flex;list-style:none;gap:2.2rem}
+    .nav-links a{text-decoration:none;color:#cbd5e1;font-weight:500;border-bottom:2px solid transparent;padding-bottom:4px;transition:0.2s}
+    .nav-links a:hover{color:#a78bfa;border-bottom-color:#a78bfa}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+    .navbar .ai-indicator{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#8b5cf6,#a78bfa);display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:white;cursor:pointer;z-index:10}
+    .marketplace-form{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .marketplace-form input,.marketplace-form textarea{width:100%;background:#111827;border:1px solid #2e3a48;color:#e2e8f0;padding:14px 16px;border-radius:18px;outline:none}
+    .marketplace-form textarea{grid-column:span 2;min-height:120px;resize:vertical}
+    .marketplace-form button{grid-column:span 2;background:#4f46e5;border:none;border-radius:20px;padding:14px;font-weight:600;color:white;cursor:pointer;transition:0.2s}
+    .marketplace-form button:hover{background:#6366f1}
+    .marketplace-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin-top:1.5rem}
+    .marketplace-card{background:rgba(15,20,26,0.95);border:1px solid #2e3a48;border-radius:24px;overflow:hidden;box-shadow:0 18px 48px rgba(0,0,0,0.18)}
+    .marketplace-card img{width:100%;height:220px;object-fit:cover}
+    .marketplace-card-body{padding:1.2rem;display:flex;flex-direction:column;gap:0.75rem}
+    .marketplace-card-body h3{margin:0;color:#e2e8f0}
+    .marketplace-card-body p{margin:0;color:#9aa4b8}
+    .marketplace-card-body .price{font-weight:700;color:#34d399;letter-spacing:0.5px}
+
+    section{scroll-margin-top:90px;margin-bottom:4rem}
+    h1{font-size:2.5rem;font-weight:600;background:linear-gradient(to right,#e0e7ff,#bdd3ff);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:1.5rem}
+    h2{font-size:1.8rem;margin-bottom:1rem;color:#f1f5f9}
+    .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem}
+    .glass-card{background:rgba(20,28,36,0.7);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-radius:28px;padding:2rem;border:1px solid rgba(255,255,255,0.05);transition:transform 0.2s}
+    .glass-card:hover{transform:translateY(-4px);border-color:rgba(167,139,250,0.3)}
+    .glass-card i{font-size:2rem;color:#a78bfa;margin-bottom:1rem}
+    .chat-header-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;flex-wrap:wrap;gap:1rem}
+    .room-badge{background:#1e2a36;padding:6px 14px;border-radius:40px;font-size:0.9rem;display:flex;align-items:center;gap:8px}
+    .chat-container{background:linear-gradient(180deg,rgba(15,20,26,0.98),rgba(10,14,20,0.98));-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:32px;border:1px solid rgba(79,70,229,0.18);box-shadow:0 24px 80px rgba(0,0,0,0.22);height:650px;max-height:80vh;display:flex;flex-direction:column;overflow:hidden}
+    .chat-header{padding:1rem 1.8rem;border-bottom:1px solid #2e3a48;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;background:linear-gradient(180deg,rgba(15,20,26,0.98),rgba(10,14,20,0.98))}
+    .chat-header .chat-title{display:flex;align-items:center;gap:0.8rem;font-weight:600;color:#e2e8f0}
+    .chat-header .chat-title i{font-size:1rem;color:#34d399}
+    .chat-status{color:#9aa4b8;font-size:0.95rem;display:flex;align-items:center;gap:0.5rem}
+    .typing-indicator{font-size:0.85rem;color:#a5b9ce;min-height:24px}
+    .messages-area{flex:1;overflow-y:auto;padding:1.5rem 1.8rem 0.8rem;display:flex;flex-direction:column;gap:12px;background:radial-gradient(circle at 10% 20%,#0f1722,#07121a);background-image:radial-gradient(circle at 20% 20%,rgba(255,255,255,0.05),transparent 26%),radial-gradient(circle at 80% 10%,rgba(79,70,229,0.12),transparent 18%),radial-gradient(circle at 40% 80%,rgba(34,197,94,0.12),transparent 20%),linear-gradient(180deg,#0f1722,#07121a)}
+    .message-bubble{max-width:72%;align-self:flex-start;display:flex;flex-direction:column;gap:8px}
+    .message-bubble.own{align-self:flex-end}
+    .bubble-content{background:#f8fafc;color:#0f1722;border:1px solid rgba(148,163,184,0.24);padding:14px 18px;border-radius:22px 22px 22px 6px;word-break:break-word;box-shadow:0 10px 24px rgba(0,0,0,0.08)}
+    .own .bubble-content{background:#25d366;border-color:rgba(37,211,102,0.3);border-radius:22px 22px 6px 22px;color:white}
+    .message-meta{display:flex;gap:8px;font-size:0.75rem;color:#8b99aa;margin-bottom:4px;padding:0 6px}
+    .ai-badge{background:#8b5cf6;color:white;font-size:0.7rem;padding:2px 8px;border-radius:30px;margin-left:8px}
+    .chat-input-area{display:flex;padding:1.2rem 1.8rem;background:#0f1722;border-top:1px solid #263445;gap:10px;align-items:center}
+    .input-wrapper{flex:1;display:flex;background:#1b2532;border:1px solid #374a5e;border-radius:60px;align-items:center;padding:0 6px 0 18px}
+    .input-wrapper input{flex:1;background:transparent;border:none;padding:14px 0;color:white;font-size:1rem;outline:none}
+    .emoji-btn,.sound-toggle,.voice-btn{background:transparent;border:none;color:#9aaec2;font-size:1.3rem;cursor:pointer;padding:8px;border-radius:50%;transition:0.2s}
+    .voice-btn{width:44px;height:44px;display:flex;align-items:center;justify-content:center}
+    .theme-toggle{background:transparent;border:none;color:#9aaec2;font-size:1.3rem;cursor:pointer;padding:8px;border-radius:50%;transition:0.2s;margin-left:10px}
+    .theme-toggle:hover{background:#2d3b4a;color:#cbd5e1}
+    .settings-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:none;z-index:2000;align-items:center;justify-content:center}
+    .settings-content{background:#1e293b;border-radius:24px;padding:2rem;max-width:500px;width:90%;border:1px solid #3b4e62}
+    .settings-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
+    .settings-header h2{color:#e2e8f0;margin:0}
+    .close-btn{background:none;border:none;color:#9aaec2;font-size:1.5rem;cursor:pointer;padding:8px;border-radius:50%;transition:0.2s}
+    .close-btn:hover{background:#334a62;color:#cbd5e1}
+    .setting-item{display:flex;justify-content:space-between;align-items:center;padding:1rem 0;border-bottom:1px solid #3b4e62}
+    .setting-item:last-child{border-bottom:none}
+    .setting-label{color:#cbd5e1;font-weight:500}
+    .toggle-switch{position:relative;display:inline-block;width:50px;height:24px}
+    .toggle-switch input{opacity:0;width:0;height:0}
+    .toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#334155;border-radius:24px;transition:0.3s}
+    .toggle-slider:before{position:absolute;content:'';height:18px;width:18px;left:3px;bottom:3px;background:white;border-radius:50%;transition:0.3s}
+    input:checked + .toggle-slider{background:#4f46e5}
+    input:checked + .toggle-slider:before{transform:translateX(26px)}
+    .message-bubble{animation:slideIn 0.3s ease-out}
+    @keyframes slideIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    .own.message-bubble{animation:slideInRight 0.3s ease-out}
+    @keyframes slideInRight{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+    .emoji-picker{position:absolute;bottom:80px;left:20px;background:#1e293b;border:1px solid #3b4e62;border-radius:24px;padding:12px;display:none;grid-template-columns:repeat(8,1fr);gap:8px;z-index:100;box-shadow:0 10px 30px rgba(0,0,0,0.7)}
+    .emoji-picker span{font-size:1.6rem;cursor:pointer;padding:4px;border-radius:12px;transition:0.1s}
+    .emoji-picker span:hover{background:#334a62}
+    .external-ai-links{display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:1rem}
+    .ai-link-btn{background:#5b21b6;color:white;border:none;border-radius:999px;padding:0.9rem 1.4rem;text-decoration:none;font-weight:600;transition:0.2s}
+    .ai-floating-btn{position:fixed;bottom:20px;right:20px;width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#8b5cf6,#a78bfa);color:white;border:none;cursor:pointer;box-shadow:0 8px 24px rgba(139,92,246,0.4);z-index:1000;display:flex;align-items:center;justify-content:center;font-size:1.5rem;transition:0.3s}
+    .ai-floating-btn:hover{background:linear-gradient(135deg,#7c3aed,#9333ea);transform:scale(1.1)}
+    .ai-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:none;z-index:2000;align-items:center;justify-content:center}
+    .ai-chat-header{background:#1e293b;padding:1rem;border-bottom:1px solid #374151;display:flex;align-items:center;justify-content:space-between}
+    .ai-chat-header h3{margin:0;color:#e2e8f0}
+    .ai-close-btn{background:none;border:none;color:#9ca3af;font-size:1.5rem;cursor:pointer}
+    .ai-voice-toggle{background:none;border:none;color:#9ca3af;font-size:1.2rem;cursor:pointer;margin-right:10px}
+
+    .ai-messages-area{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:12px}
+    .ai-input-area{display:flex;padding:1rem;gap:10px;border-top:1px solid #374151}
+    .ai-input{flex:1;background:#1f2937;border:1px solid #4b5563;border-radius:20px;padding:10px 16px;color:white;outline:none}
+    .private-chat-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:none;z-index:2000;align-items:center;justify-content:center;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+    .private-chat-modal.show{display:flex}
+    .private-chat-content{background:linear-gradient(180deg,rgba(15,20,26,0.98),rgba(10,14,20,0.98));border-radius:24px;border:1px solid #2e3a48;width:90%;max-width:600px;height:80vh;display:flex;flex-direction:column;box-shadow:0 24px 80px rgba(0,0,0,0.3)}
+    .private-chat-setup{padding:2rem;text-align:center;display:flex;flex-direction:column;gap:1.5rem}
+    .private-chat-setup h2{color:#e2e8f0;margin:0}
+    .private-chat-setup p{color:#9ca3af;margin:0}
+    .private-code-input{background:#1b2532;border:1px solid #374a5e;border-radius:20px;padding:12px 16px;color:white;outline:none;font-size:1rem;width:100%;max-width:300px;margin:0 auto;display:block}
+    .private-code-display{background:#0f1722;border:2px solid #4f46e5;border-radius:20px;padding:1rem;margin:1rem auto;width:100%;max-width:300px;text-align:center;color:#34d399;font-family:monospace;font-weight:bold;font-size:1.2rem;word-break:break-all}
+    .private-chat-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+    .private-btn{background:#4f46e5;border:none;border-radius:20px;padding:12px 24px;color:white;font-weight:600;cursor:pointer;transition:0.2s}
+    .private-btn:hover{background:#6366f1}
+    .private-btn.secondary{background:#374a5e;color:#cbd5e1}
+    .private-btn.secondary:hover{background:#4b5f7a}
+    .private-close-btn{position:absolute;top:20px;right:20px;background:none;border:none;color:#9ca3af;font-size:1.5rem;cursor:pointer;padding:8px}
+    .private-messages{flex:1;overflow-y:auto;padding:1.5rem;display:flex;flex-direction:column;gap:12px;background:radial-gradient(circle at 10% 20%,#0f1722,#07121a)}
+    .private-input-area{display:flex;gap:10px;padding:1.2rem;border-top:1px solid #2e3a48}
+    .private-input-wrapper{flex:1;display:flex;background:#1b2532;border:1px solid #374a5e;border-radius:60px;padding:0 16px;align-items:center}
+    .private-input-wrapper input{flex:1;background:transparent;border:none;padding:12px 0;color:white;outline:none;font-size:1rem}
+    .private-msg-bubble{max-width:70%;padding:12px 16px;border-radius:18px;word-break:break-word}
+    .private-msg-own{align-self:flex-end;background:#25d366;color:white;border-radius:18px 18px 4px 18px}
+    .private-msg-other{align-self:flex-start;background:#374a5e;color:#e2e8f0;border-radius:18px 18px 18px 4px}
+    .private-chat-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:none;z-index:2000;align-items:center;justify-content:center;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+    .private-chat-modal.show{display:flex}
+    .private-chat-content{background:linear-gradient(180deg,rgba(15,20,26,0.98),rgba(10,14,20,0.98));border-radius:24px;border:1px solid #2e3a48;width:90%;max-width:600px;height:80vh;display:flex;flex-direction:column;box-shadow:0 24px 80px rgba(0,0,0,0.3)}
+    .private-chat-setup{padding:2rem;text-align:center;display:flex;flex-direction:column;gap:1.5rem}
+    .private-chat-setup h2{color:#e2e8f0;margin:0}
+    .private-chat-setup p{color:#9ca3af;margin:0}
+    .private-code-input{background:#1b2532;border:1px solid #374a5e;border-radius:20px;padding:12px 16px;color:white;outline:none;font-size:1rem;width:100%;max-width:300px;margin:0 auto;display:block}
+    .private-code-display{background:#0f1722;border:2px solid #4f46e5;border-radius:20px;padding:1rem;margin:1rem auto;width:100%;max-width:300px;text-align:center;color:#34d399;font-family:monospace;font-weight:bold;font-size:1.2rem;word-break:break-all}
+    .private-chat-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+    .private-btn{background:#4f46e5;border:none;border-radius:20px;padding:12px 24px;color:white;font-weight:600;cursor:pointer;transition:0.2s}
+    .private-btn:hover{background:#6366f1}
+    .private-btn.secondary{background:#374a5e;color:#cbd5e1}
+    .private-btn.secondary:hover{background:#4b5f7a}
+    .private-close-btn{position:absolute;top:20px;right:20px;background:none;border:none;color:#9ca3af;font-size:1.5rem;cursor:pointer;padding:8px}
+    .private-messages{flex:1;overflow-y:auto;padding:1.5rem;display:flex;flex-direction:column;gap:12px;background:radial-gradient(circle at 10% 20%,#0f1722,#07121a)}
+    .private-input-area{display:flex;gap:10px;padding:1.2rem;border-top:1px solid #2e3a48}
+    .private-input-wrapper{flex:1;display:flex;background:#1b2532;border:1px solid #374a5e;border-radius:60px;padding:0 16px;align-items:center}
+    .private-input-wrapper input{flex:1;background:transparent;border:none;padding:12px 0;color:white;outline:none;font-size:1rem}
+    .private-msg-bubble{max-width:70%;padding:12px 16px;border-radius:18px;word-break:break-word}
+    .private-msg-own{align-self:flex-end;background:#25d366;color:white;border-radius:18px 18px 4px 18px}
+    .private-msg-other{align-self:flex-start;background:#374a5e;color:#e2e8f0;border-radius:18px 18px 18px 4px}
+    .ai-send-btn{background:#8b5cf6;border:none;border-radius:50%;width:40px;height:40px;color:white;cursor:pointer}
+
+    .room-input-group{display:flex;gap:8px}
+    .room-input-group input{background:#1f2a37;border:1px solid #3f5568;border-radius:40px;padding:8px 16px;color:white;width:180px}
+    .btn-outline{background:#334155;border:none;border-radius:30px;padding:8px 16px;color:white;cursor:pointer;font-weight:500;transition:0.2s}
+    .btn-outline:hover{background:#475569}
+    .invite-link-btn{background:#4f46e5;border:none;border-radius:30px;padding:8px 16px;color:white;cursor:pointer;font-weight:500;display:flex;align-items:center;gap:8px;transition:0.2s}
+    .invite-link-btn:hover{background:#6366f1}
+    .auth-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:none;z-index:3000;align-items:center;justify-content:center;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+    .auth-modal.show{display:flex}
+    .auth-content{background:linear-gradient(180deg,rgba(15,20,26,0.98),rgba(10,14,20,0.98));border-radius:24px;border:1px solid #2e3a48;width:90%;max-width:400px;padding:2rem;display:flex;flex-direction:column;gap:1.5rem;box-shadow:0 24px 80px rgba(0,0,0,0.3)}
+    .auth-header{text-align:center;margin-bottom:1rem}
+    .auth-header h2{color:#e2e8f0;margin:0;font-size:1.8rem}
+    .auth-header p{color:#9ca3af;margin:0.5rem 0 0 0;font-size:0.9rem}
+    .auth-form{display:flex;flex-direction:column;gap:1rem}
+    .auth-input{background:#1b2532;border:1px solid #374a5e;border-radius:20px;padding:14px 16px;color:white;outline:none;font-size:1rem;transition:0.2s}
+    .auth-input:focus{border-color:#4f46e5}
+    .auth-input.error{border-color:#ef4444}
+    .auth-btn{background:#4f46e5;border:none;border-radius:20px;padding:14px;color:white;font-weight:600;cursor:pointer;transition:0.2s;font-size:1rem}
+    .auth-btn:hover{background:#6366f1}
+    .auth-btn:disabled{background:#374a5e;cursor:not-allowed}
+    .auth-toggle{text-align:center;margin-top:1rem}
+    .auth-toggle a{color:#4f46e5;text-decoration:none;font-weight:500}
+    .auth-toggle a:hover{color:#6366f1}
+    .auth-close-btn{position:absolute;top:20px;right:20px;background:none;border:none;color:#9ca3af;font-size:1.5rem;cursor:pointer;padding:8px}
+    .user-profile{display:flex;align-items:center;gap:12px;padding:8px 16px;background:#1e293b;border-radius:20px;border:1px solid #374a5e}
+    .user-avatar{width:32px;height:32px;border-radius:50%;background:#4f46e5;display:flex;align-items:center;justify-content:center;color:white;font-weight:600;font-size:0.9rem}
+    .user-info{display:flex;flex-direction:column}
+    .user-name{color:#e2e8f0;font-weight:600;font-size:0.9rem}
+    .user-email{color:#9ca3af;font-size:0.8rem}
+    .logout-btn{background:#ef4444;border:none;border-radius:16px;padding:6px 12px;color:white;font-size:0.8rem;cursor:pointer;margin-left:auto}
+    .logout-btn:hover{background:#dc2626}
+    .auth-required{display:flex;align-items:center;gap:8px;padding:12px;background:#1e293b;border:1px solid #374a5e;border-radius:12px;margin:8px 0}
+    .auth-required i{color:#f59e0b}
+    .auth-required span{color:#d97706;font-size:0.9rem}
+    footer{text-align:center;padding:2rem;color:#6c7a8a}
+    .ai-mention{color:#a78bfa;font-weight:500}
+
+    /* AI Chat Room Section */
+    #aiChatRoom{display:none;flex-direction:column;flex:1;height:100vh}
+    #aiChatRoom.active{display:flex}
+    .ai-room-header{background:#1e293b;padding:1rem 1.8rem;border-bottom:1px solid #2e3a48;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+    .ai-room-header h2{margin:0;color:#e2e8f0;display:flex;align-items:center;gap:10px}
+    .ai-room-close{background:#4f46e5;border:none;color:white;padding:10px 20px;border-radius:20px;cursor:pointer;font-weight:600;transition:0.2s}
+    .ai-room-close:hover{background:#6366f1}
+    .ai-room-messages{flex:1;overflow-y:auto;padding:1.5rem 1.8rem;display:flex;flex-direction:column;gap:12px;background:radial-gradient(circle at 10% 20%,#0f1722,#07121a)}
+    .ai-room-input-area{display:flex;padding:1.2rem 1.8rem;gap:10px;background:#0f1722;border-top:1px solid #263445;align-items:center}
+    .ai-room-input{flex:1;background:#1b2532;border:1px solid #374a5e;border-radius:60px;padding:14px 18px;color:white;outline:none;font-size:1rem}
+    .ai-room-input:focus{border-color:#4f46e5}
+    .ai-room-send{background:#8b5cf6;border:none;color:white;padding:12px 24px;border-radius:60px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:8px;transition:0.2s}
+    .ai-room-send:hover{background:#a78bfa}
+
+    /* Comprehensive Mobile-First Responsive Design */
+    /* Extra Small Phones (< 360px) */
+    @media (max-width:359px){
+      .navbar{padding:0.7rem 1rem}
+      .logo{font-size:1.3rem}
+      .app-logo{width:40px;height:40px}
+      h1{font-size:1.8rem}
+      h2{font-size:1.3rem}
+      .feature-grid{grid-template-columns:1fr}
+      .chat-container{height:500px}
+      .chat-input-area,.ai-room-input-area{padding:0.8rem 1rem}
+      .input-wrapper,.ai-room-input{padding:10px 14px}
+      .emoji-btn,.sound-toggle,.voice-btn{font-size:1rem}
+      .message-bubble{max-width:85%}
+      .marketplace-gallery{grid-template-columns:1fr}
+      .marketplace-card img{height:180px}
+      .ai-floating-btn{width:50px;height:50px;font-size:1.2rem;bottom:15px;right:15px}
+    }
+
+    /* Small Phones (360px - 480px) */
+    @media (max-width:480px){
+      .navbar{padding:0.8rem 1.2rem}
+      .logo{font-size:1.5rem}
+      .app-logo{width:42px;height:42px}
+      .nav-links{position:fixed;left:-100%;top:70px;flex-direction:column;background:rgba(10,16,24,0.98);width:100%;padding:2rem 0;gap:2rem;text-align:center;transition:0.3s;z-index:999}
+      .nav-links.active{left:0}
+      .hamburger{display:flex}
+      .hamburger.active .bar:nth-child(2){opacity:0}
+      .hamburger.active .bar:nth-child(1){transform:translateY(8px) rotate(45deg)}
+      .hamburger.active .bar:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+      .logo-sub{display:none}
+      h1{font-size:2rem}
+      h2{font-size:1.5rem}
+      .feature-grid{grid-template-columns:1fr;gap:1rem}
+      .glass-card{padding:1.5rem}
+      .chat-container{height:55vh}
+      .chat-input-area,.ai-room-input-area{flex-direction:column;gap:8px;padding:1rem}
+      .input-wrapper,.ai-room-input{width:100%;padding:12px 14px;font-size:16px}
+      .emoji-btn,.sound-toggle,.voice-btn{font-size:1.2rem;width:40px;height:40px}
+      .ai-send-btn{width:100%;height:44px}
+      .ai-room-send{width:100%;justify-content:center}
+      .message-bubble{max-width:80%}
+      .room-input-group{width:100%;flex-direction:column}
+      .room-input-group input{width:100%}
+      .chat-header-bar{flex-direction:column;align-items:flex-start}
+      .invite-link-btn{width:100%}
+      .marketplace-form{grid-template-columns:1fr}
+      .marketplace-form button,.marketplace-form textarea{grid-column:span 1}
+      .marketplace-gallery{grid-template-columns:1fr;gap:1rem}
+      .marketplace-card img{height:200px}
+      .ai-floating-btn{width:54px;height:54px;bottom:20px;right:20px;font-size:1.3rem}
+      .ai-room-header{flex-direction:column;align-items:flex-start}
+      .ai-room-close{width:100%;margin-top:0.5rem}
+      footer{padding:1.5rem 1rem;font-size:0.85rem}
+    }
+
+    /* Tablets (481px - 768px) */
+    @media (min-width:481px) and (max-width:768px){
+      .navbar{padding:0.9rem 1.5rem}
+      .logo{font-size:1.6rem}
+      .app-logo{width:44px;height:44px}
+      h1{font-size:2.2rem}
+      h2{font-size:1.6rem}
+      .feature-grid{grid-template-columns:repeat(2,1fr)}
+      .chat-container{height:600px}
+      .chat-input-area,.ai-room-input-area{padding:1rem 1.5rem;gap:10px}
+      .input-wrapper,.ai-room-input{padding:12px 16px;font-size:0.95rem}
+      .message-bubble{max-width:75%}
+      .marketplace-gallery{grid-template-columns:repeat(2,1fr)}
+      .marketplace-card img{height:220px}
+      .room-input-group{gap:10px}
+      .room-input-group input{width:auto}
+      .chat-header-bar{gap:1rem}
+      .user-profile{gap:10px;padding:8px 12px}
+      .ai-floating-btn{width:56px;height:56px}
+    }
+
+    /* Desktop (769px - 1200px) */
+    @media (min-width:769px){
+      .navbar{padding:0.9rem 2rem}
+      .hamburger{display:none}
+      h1{font-size:2.5rem}
+      .feature-grid{grid-template-columns:repeat(4,1fr)}
+      .chat-container{height:650px}
+      .marketplace-gallery{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+      .ai-floating-btn{width:60px;height:60px;bottom:30px;right:30px}
+    }
+
+    /* Large Desktop (> 1200px) */
+    @media (min-width:1200px){
+      main{max-width:1400px;margin:0 auto;padding:0 2rem}
+      .marketplace-gallery{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+      .feature-grid{gap:2rem}
+      h1{font-size:2.8rem}
+    }
+
+    /* Touch Device Optimizations */
+    @media (hover:none) and (pointer:coarse){
+      .emoji-btn,.sound-toggle,.voice-btn,.close-btn{min-height:44px;min-width:44px}
+      .private-btn,.auth-btn,.ai-room-send,.invite-link-btn{min-height:44px;padding:12px 20px}
+      button{padding:12px 16px}
+    }
+
+    /* Landscape Orientation */
+    @media (max-height:500px) and (orientation:landscape){
+      .navbar{padding:0.6rem 1rem}
+      .chat-container,.private-chat-content{height:auto;max-height:calc(100vh - 100px)}
+      h1{font-size:1.8rem;margin-bottom:0.8rem}
+    }
+    /* Light Mode Styles */
+    body.light-mode{background:#f8fafc;color:#1e293b}
+    body.light-mode .navbar{background:rgba(255,255,255,0.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.05)}
+    body.light-mode .logo{color:#1e293b}
+    body.light-mode .logo-sub{color:#64748b}
+    body.light-mode .nav-links a{color:#475569;border-bottom-color:transparent}
+    body.light-mode .nav-links a:hover{color:#4f46e5;border-bottom-color:#4f46e5}
+    body.light-mode .hamburger .bar{background:#475569}
+    body.light-mode .glass-card{background:rgba(255,255,255,0.8);border:1px solid rgba(0,0,0,0.05)}
+    body.light-mode .chat-container{background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,250,252,0.98));border:1px solid rgba(148,163,184,0.2)}
+    body.light-mode .chat-header{background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,250,252,0.98))}
+    body.light-mode .messages-area{background:linear-gradient(180deg,#f8fafc,#f1f5f9)}
+    body.light-mode .chat-input-area{background:#f8fafc;border-top:1px solid #e2e8f0}
+    body.light-mode .input-wrapper{background:#ffffff;border:1px solid #cbd5e1}
+    body.light-mode .input-wrapper input{color:#1e293b}
+    body.light-mode .emoji-btn,.light-mode .sound-toggle,.light-mode .voice-btn,.light-mode .theme-toggle{background:transparent;color:#64748b}
+    body.light-mode .emoji-btn:hover,.light-mode .sound-toggle:hover,.light-mode .voice-btn:hover,.light-mode .theme-toggle:hover{background:#f1f5f9;color:#475569}
+    body.light-mode .settings-bar{background:#f8fafc;border-top:1px solid #e2e8f0}
+    body.light-mode .btn-outline{background:#f1f5f9;border:1px solid #cbd5e1;color:#475569}
+    body.light-mode .btn-outline:hover{background:#e2e8f0}
+    body.light-mode .settings-modal{background:rgba(255,255,255,0.9)}
+    body.light-mode .settings-content{background:#ffffff;border:1px solid #e2e8f0}
+    body.light-mode .settings-header h2{color:#1e293b}
+    body.light-mode .setting-label{color:#475569}
+    body.light-mode .toggle-slider{background:#cbd5e1}
+    body.light-mode .toggle-slider:before{background:#ffffff}
+    body.light-mode footer{color:#64748b}
+  </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<div class="navbar">
+  <div class="logo-area">
+    <div class="app-logo"><img src="anonymous.jpg" alt="Anonymous App Logo"></div>
+    <div>
+      <div class="logo">ANONYMOUS</div>
+      <span class="logo-sub">CHAT AI</span>
+    </div>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#chat">Chat</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#marketplace">Marketplace</a></li>
+    <li><a href="#main-menu">Main Menu</a></li>
+    <li><a href="#" id="privateNavBtn" style="color:#34d399;"><i class="fas fa-lock"></i> Private Chat</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+  </div>
+  <div class="ai-indicator" id="navbarAI" title="AI Assistant"><i class="fas fa-robot"></i></div>
+  <div id="authButtons" style="display:flex;gap:8px;">
+    <button class="btn-outline" id="loginBtn">Login</button>
+    <button class="btn-outline" id="signupBtn">Sign Up</button>
+  </div>
+  <div id="userProfile" style="display:none;">
+    <div class="user-profile">
+      <div class="user-avatar" id="userAvatar">U</div>
+      <div class="user-info">
+        <div class="user-name" id="userName">User</div>
+        <div class="user-email" id="userEmail">user@example.com</div>
+      </div>
+      <button class="logout-btn" id="logoutBtn">Logout</button>
+    </div>
+  </div>
+  <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+    <i class="fas fa-moon"></i>
+  </button>
+</div>
+
+<!-- Settings Modal -->
+<div class="settings-modal" id="settingsModal">
+  <div class="settings-content">
+    <div class="settings-header">
+      <h2>Settings</h2>
+      <button class="close-btn" id="closeSettings">&times;</button>
+    </div>
+    <div class="setting-item">
+      <span class="setting-label">Dark Theme</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="darkModeToggle" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div class="setting-item">
+      <span class="setting-label">Sound Effects</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="soundToggleSetting" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div class="setting-item">
+      <span class="setting-label">Voice Recognition</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="voiceToggleSetting" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div class="setting-item">
+      <span class="setting-label">Typing Indicators</span>
+      <label class="toggle-switch">
+        <input type="checkbox" id="typingToggleSetting" checked>
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<main>
+  <!-- Home Section -->
+  <section id="home">
+    <h1><i class="fas fa-mask"></i> private rooms · AI assistant · invites</h1>
+    <div class="feature-grid">
+      <div class="glass-card">
+        <i class="fas fa-robot"></i>
+        <h3>Anonymous AI</h3>
+        <p>Mention <span class="ai-mention">@ai</span> or ask a question — our friendly bot replies instantly.</p>
+      </div>
+      <div class="glass-card">
+        <i class="fas fa-link"></i>
+        <h3>Share invite link</h3>
+        <p>Copy the link and send it to friends – they join the same room.</p>
+      </div>
+      <div class="glass-card">
+        <i class="fas fa-keyboard"></i>
+        <h3>Typing indicators</h3>
+        <p>See when others are typing in real time.</p>
+      </div>
+      <div class="glass-card">
+        <i class="fas fa-volume-up"></i>
+        <h3>Sound notifications</h3>
+        <p>Optional ping on new messages.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chat Section -->
+  <section id="chat">
+    <div class="chat-header-bar">
+      <h1><i class="fas fa-comments"></i> anonymous room</h1>
+      <div style="display: flex; gap: 12px; align-items: center;">
+        <div class="room-badge">
+          <i class="fas fa-door-open"></i>
+          <span id="currentRoomDisplay"># general</span>
+        </div>
+        <button class="invite-link-btn" id="copyInviteBtn" title="Copy invite link">
+          <i class="fas fa-link"></i> Copy invite link
+        </button>
+      </div>
+    </div>
+
+    <div class="chat-container">
+      <div class="chat-header">
+        <div class="chat-title"><i class="fas fa-user-secret"></i><span id="connectionStatus">live broadcast</span></div>
+        <div>
+          <div class="typing-indicator" id="typingIndicator"></div>
+          <div class="chat-status"><i class="fas fa-circle" style="color:#34d399;font-size:0.6rem"></i> encrypted room</div>
+        </div>
+      </div>
+
+      <div class="messages-area" id="messagesArea">
+        <div style="color:#6b7f94; text-align:center; padding:20px;">✨ Welcome! Tap the AI button to chat with our intelligent assistant. It can learn from conversations and fetch info!</div>
+      </div>
+
+      <div style="position:relative;">
+        <div class="emoji-picker" id="emojiPicker"></div>
+      </div>
+
+      <div class="chat-input-area">
+        <div class="input-wrapper">
+          <input type="text" id="messageInput" placeholder="Type a message... (try @ai hello or ask about Gemini)" autocomplete="off" />
+          <button type="button" class="emoji-btn" id="emojiBtn" title="Open emoji picker"><i class="far fa-smile"></i></button>
+        </div>
+        <button class="voice-btn" id="voiceBtn" title="Voice input"><i class="fas fa-microphone"></i></button>
+        <button type="button" class="send-btn" id="sendBtn" title="Send message"><i class="fas fa-paper-plane"></i></button>
+      </div>
+
+      <div class="settings-bar">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <i class="fas fa-user-astronaut"></i>
+          <span>You:</span>
+          <span id="currentUsernameDisplay" style="font-weight:600;">AnonymousFox</span>
+        </div>
+        <input type="text" id="usernameInput" placeholder="new nickname" maxlength="20" style="background:#1f2a37; border:1px solid #3f5568; border-radius:40px; padding:8px 16px; color:white; width:160px;" />
+        <button class="btn-outline" id="saveNameBtn">Set name</button>
+        
+        <button class="sound-toggle" id="soundToggle" title="Toggle sound">
+          <i class="fas fa-volume-up"></i>
+        </button>
+
+        <button class="btn-outline" id="settingsBtn">Settings</button>
+
+        <div class="room-input-group">
+          <input type="text" id="roomInput" placeholder="room name" value="general" />
+          <button class="btn-outline" id="joinRoomBtn">Join room</button>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top:1rem; color:#9aabbe;"><i class="fas fa-sync-alt"></i> Open multiple tabs to test – messages sync locally.</p>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services">
+    <h1><i class="fas fa-cogs"></i> Services</h1>
+    <div style="display:grid; gap:1.5rem; grid-template-columns:repeat(auto-fit,minmax(180px,1fr));">
+      <div class="glass-card" style="text-align:center;">
+        <i class="fas fa-user-ninja fa-2x" style="color:#a78bfa;"></i>
+        <h3>Private Rooms</h3>
+        <p>Create or join any room via hash.</p>
+      </div>
+      <div class="glass-card" style="text-align:center;">
+        <i class="fas fa-robot fa-2x" style="color:#a78bfa;"></i>
+        <h3>Anonymous AI</h3>
+        <p>Ask questions, get smart replies.</p>
+      </div>
+      <div class="glass-card" style="text-align:center;">
+        <i class="fas fa-bell fa-2x" style="color:#a78bfa;"></i>
+        <h3>Notifications</h3>
+        <p>Sound alerts + typing indicators.</p>
+      </div>
+      <div class="glass-card" style="text-align:center;">
+        <i class="fas fa-share-alt fa-2x" style="color:#a78bfa;"></i>
+        <h3>Invite System</h3>
+        <p>One‑click link sharing.</p>
+      </div>
+      <div class="glass-card" style="text-align:center;">
+        <i class="fas fa-brain fa-2x" style="color:#a78bfa;"></i>
+        <h3>Gemini + ChatGPT</h3>
+        <p>Open advanced AI tools for deeper answers and creative prompts.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Menu Section -->
+  <section id="main-menu">
+    <h1><i class="fas fa-bars"></i> Main Menu</h1>
+    <div class="glass-card">
+      <h2><i class="fas fa-terminal"></i> Quick Commands</h2>
+      <ul style="list-style:none; color:#cfddee; margin-top:1rem;">
+        <li style="padding:10px 0; border-bottom:1px solid #2b3b4a;"><i class="fas fa-hashtag" style="margin-right:12px; color:#60a5fa;"></i> Type a room name and click "Join room"</li>
+        <li style="padding:10px 0; border-bottom:1px solid #2b3b4a;"><i class="fas fa-at" style="margin-right:12px; color:#60a5fa;"></i> Mention <strong>@ai</strong> to chat with Anonymous AI</li>
+        <li style="padding:10px 0; border-bottom:1px solid #2b3b4a;"><i class="fas fa-brain" style="margin-right:12px; color:#60a5fa;"></i> Ask <strong>@ai</strong> to compare Gemini and ChatGPT.</li>
+        <li style="padding:10px 0; border-bottom:1px solid #2b3b4a;"><i class="fas fa-volume-up" style="margin-right:12px; color:#60a5fa;"></i> Toggle sound with the speaker icon</li>
+        <li style="padding:10px 0;"><i class="fas fa-link" style="margin-right:12px; color:#60a5fa;"></i> Copy invite link to share this room</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="marketplace">
+    <h1><i class="fas fa-store-alt"></i> Marketplace</h1>
+    <div class="glass-card">
+      <h2>Sell with ZMW prices</h2>
+      <p>Upload an image of your item, set the ZMW price, and list it for buyers instantly.</p>
+      <div id="marketplaceAuthRequired" class="auth-required" style="display:none;">
+        <i class="fas fa-lock"></i>
+        <span>Please <a href="#" id="marketplaceLoginLink" style="color:#4f46e5;text-decoration:underline;">sign in</a> to list items and access the marketplace.</span>
+      </div>
+      <div id="marketplaceContent">
+        <form class="marketplace-form" id="marketForm">
+          <input type="text" id="marketTitle" placeholder="Item title" required />
+          <input type="number" id="marketPrice" placeholder="Price (ZMW)" min="0" step="1" required />
+          <input type="file" id="marketPhoto" accept="image/*" required title="Upload item photo" />
+          <textarea id="marketDesc" placeholder="Item description"></textarea>
+          <button type="submit">List Item</button>
+        </form>
+        <div class="marketplace-gallery" id="marketGallery"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="ai-labs">
+    <h1><i class="fas fa-microchip"></i> AI Labs</h1>
+    <div class="glass-card" style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+      <div>
+        <h2>Open Gemini or ChatGPT</h2>
+        <p>Use these advanced tools alongside the local anonymous bot for faster brainstorming and smarter answers.</p>
+      </div>
+      <div class="external-ai-links">
+        <a class="ai-link-btn" href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a>
+        <a class="ai-link-btn" href="https://chat.openai.com" target="_blank" rel="noopener">ChatGPT</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- AI Chat Room Section -->
+<section id="aiChatRoom">
+  <div class="ai-room-header">
+    <h2><i class="fas fa-brain"></i> AI Chat Room</h2>
+    <button class="ai-room-close" id="aiRoomCloseBtn">← Back to Chat</button>
+  </div>
+  <div class="ai-room-messages" id="aiRoomMessages">
+    <div style="color:#9ca3af;text-align:center;">Hello! I'm your AI assistant. How can I help you today? 🤖</div>
+  </div>
+  <div class="ai-room-input-area">
+    <input type="text" class="ai-room-input" id="aiRoomInput" placeholder="Ask me anything..." />
+    <button class="ai-room-send" id="aiRoomSendBtn"><i class="fas fa-paper-plane"></i> Send</button>
+  </div>
+</section>
+
+<!-- Private Chat Modal -->
+<div class="private-chat-modal" id="privateChatModal">
+  <div class="private-chat-content" style="position:relative;">
+    <button class="private-close-btn" id="privateCloseBtn">&times;</button>
+    <div id="privateSetupView" class="private-chat-setup">
+      <h2><i class="fas fa-lock"></i> Private Chat (1-on-1)</h2>
+      <p>Create a unique chat code or join someone's private room. Only 2 people can chat in this room.</p>
+      <div>
+        <label style="color:#9ca3af; display:block; margin-bottom:0.5rem;">Your Private Chat Code:</label>
+        <div class="private-code-display" id="privateChatCode">Generating...</div>
+        <button class="private-btn" id="copyPrivateCodeBtn" style="margin-top:1rem;"><i class="fas fa-copy"></i> Copy Code</button>
+      </div>
+      <div style="border-top:1px solid #2e3a48; padding-top:1.5rem; margin-top:1rem;">
+        <label style="color:#9ca3af; display:block; margin-bottom:0.75rem;">Join Someone's Room:</label>
+        <input type="text" class="private-code-input" id="joinPrivateCodeInput" placeholder="Paste their code here..." />
+        <div class="private-chat-buttons" style="margin-top:1rem;">
+          <button class="private-btn" id="joinPrivateBtn">Join Room</button>
+          <button class="private-btn secondary" id="createNewBtn">Create New</button>
+        </div>
+      </div>
+    </div>
+    <div id="privateChatView" style="display:none; flex:1; flex-direction:column;">
+      <div style="padding:1rem; border-bottom:1px solid #2e3a48; background:#1e293b; display:flex; align-items:center; justify-content:space-between;">
+        <h3 style="margin:0; color:#e2e8f0;"><i class="fas fa-lock"></i> Private Chat</h3>
+        <button class="private-btn secondary" id="exitPrivateBtn" style="padding:8px 16px; font-size:0.9rem;">Exit</button>
+      </div>
+      <div class="private-messages" id="privateMessages"></div>
+      <div class="private-input-area">
+        <div class="private-input-wrapper">
+          <input type="text" id="privateInput" placeholder="Type a message..." />
+        </div>
+        <button id="privateSendBtn" class="private-btn" style="width:50px; height:50px; padding:0; display:flex; align-items:center; justify-content:center;"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Floating AI Button -->
+<button class="ai-floating-btn" id="aiFloatingBtn" title="Chat with AI"><i class="fas fa-robot"></i></button>
+
+<!-- AI Modal -->
+<div class="ai-modal" id="aiModal">
+  <div class="ai-chat-container">
+    <div class="ai-chat-header">
+      <h3><i class="fas fa-brain"></i> AI Assistant</h3>
+      <div>
+        <button class="ai-voice-toggle" id="aiVoiceToggle" title="Toggle AI voice"><i class="fas fa-volume-up"></i></button>
+        <button class="ai-close-btn" id="aiCloseBtn">&times;</button>
+      </div>
+    </div>
+    <div class="ai-messages-area" id="aiMessagesArea">
+      <div style="color:#9ca3af;text-align:center;">Hello! I'm your AI assistant. How can I help you today?</div>
+    </div>
+    <div class="ai-input-area">
+      <input type="text" class="ai-input" id="aiInput" placeholder="Ask me anything..." />
+      <button class="ai-send-btn" id="aiSendBtn"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- Authentication Modals -->
+<div class="auth-modal" id="loginModal">
+  <div class="auth-content">
+    <button class="auth-close-btn" id="loginCloseBtn">&times;</button>
+    <div class="auth-header">
+      <h2><i class="fas fa-sign-in-alt"></i> Login</h2>
+      <p>Welcome back! Please sign in to your account.</p>
+    </div>
+    <form class="auth-form" id="loginForm">
+      <input type="email" class="auth-input" id="loginEmail" placeholder="Email address" required />
+      <input type="password" class="auth-input" id="loginPassword" placeholder="Password" required />
+      <button type="submit" class="auth-btn" id="loginSubmitBtn">Sign In</button>
+    </form>
+    <div class="auth-toggle">
+      Don't have an account? <a href="#" id="showSignup">Sign up here</a>
+    </div>
+  </div>
+</div>
+
+<div class="auth-modal" id="signupModal">
+  <div class="auth-content">
+    <button class="auth-close-btn" id="signupCloseBtn">&times;</button>
+    <div class="auth-header">
+      <h2><i class="fas fa-user-plus"></i> Create Account</h2>
+      <p>Join our community! Create your account below.</p>
+    </div>
+    <form class="auth-form" id="signupForm">
+      <input type="text" class="auth-input" id="signupName" placeholder="Full name" required />
+      <input type="email" class="auth-input" id="signupEmail" placeholder="Email address" required />
+      <input type="password" class="auth-input" id="signupPassword" placeholder="Password (min 6 characters)" minlength="6" required />
+      <input type="password" class="auth-input" id="signupConfirmPassword" placeholder="Confirm password" required />
+      <button type="submit" class="auth-btn" id="signupSubmitBtn">Create Account</button>
+    </form>
+    <div class="auth-toggle">
+      Already have an account? <a href="#" id="showLogin">Sign in here</a>
+    </div>
+  </div>
+</div>
+
+<footer>ANONYMOUS CHAT · <span id="year"></span> · Made by Gabriel Sandando · chilufyagabriel375@gmail.com · 100% serverless & private · AI powered</footer>
+
+<script>
+  (function(){
+    // UI: Mobile menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', ()=>{
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
+    document.querySelectorAll('.nav-links a').forEach(l=>l.addEventListener('click',()=>{
+      hamburger.classList.remove('active'); navLinks.classList.remove('active');
+    }));
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ---------- CHAT ENGINE (BroadcastChannel) ----------
+    const userId = 'anon-' + Math.random().toString(36).substring(2,10);
+    let currentNick = localStorage.getItem('anonymous_nickname') || 'Ghost' + Math.floor(Math.random()*100);
+    const usernameDisplay = document.getElementById('currentUsernameDisplay');
+    const usernameInput = document.getElementById('usernameInput');
+    usernameDisplay.textContent = currentNick;
+
+    // Room management via hash
+    let currentRoom = 'general';
+    function getRoomFromHash() {
+      const hash = window.location.hash.slice(1);
+      return hash ? hash : 'general';
+    }
+    function updateRoom(newRoom) {
+      currentRoom = newRoom;
+      window.location.hash = newRoom;
+      document.getElementById('currentRoomDisplay').textContent = '#' + newRoom;
+      document.getElementById('roomInput').value = newRoom;
+      reconnectChannel();
+    }
+
+    let chatChannel, typingChannel;
+    const messageList = [];
+    let soundEnabled = true;
+    const sound = new Audio('data:audio/wav;base64,UklGRlwAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YVoAAACAgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYH//w==');
+    sound.volume = 0.4;
+    const sendSound = new Audio('data:audio/wav;base64,UklGRkwAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YVoAAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAAAA==');
+    sendSound.volume = 0.35;
+
+    const messagesArea = document.getElementById('messagesArea');
+    const msgInput = document.getElementById('messageInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const typingIndicator = document.getElementById('typingIndicator');
+    const soundToggle = document.getElementById('soundToggle');
+    const copyInviteBtn = document.getElementById('copyInviteBtn');
+    const voiceBtn = document.getElementById('voiceBtn');
+    const themeToggle = document.getElementById('themeToggle');
+    const settingsBtn = document.getElementById('settingsBtn');
+    const settingsModal = document.getElementById('settingsModal');
+    const closeSettings = document.getElementById('closeSettings');
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const soundToggleSetting = document.getElementById('soundToggleSetting');
+    const voiceToggleSetting = document.getElementById('voiceToggleSetting');
+    const typingToggleSetting = document.getElementById('typingToggleSetting');
+
+    const typingUsers = new Map();
+    let isDarkMode = true;
+    let voiceEnabled = true;
+    let typingEnabled = true;
+    let recognition;
+    let voiceListening = false;
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      recognition = new SpeechRecognition();
+      recognition.lang = 'en-US';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+      recognition.continuous = false;
+      recognition.addEventListener('result', (event) => {
+        const transcript = event.results[0][0].transcript.trim();
+        msgInput.value = transcript;
+        msgInput.focus();
+      });
+      recognition.addEventListener('end', () => {
+        voiceListening = false;
+        voiceBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+        voiceBtn.title = 'Start voice input';
+      });
+      recognition.addEventListener('error', () => {
+        voiceListening = false;
+        voiceBtn.innerHTML = '<i class="fas fa-microphone-slash"></i>';
+      });
+    } else {
+      voiceBtn.disabled = true;
+      voiceBtn.title = 'Voice recognition not supported';
+    }
+
+    voiceBtn.addEventListener('click', () => {
+      if (!recognition) return;
+      voiceListening = !voiceListening;
+      if (voiceListening) {
+        try {
+          voiceBtn.innerHTML = '<i class="fas fa-microphone-alt"></i>';
+          voiceBtn.title = 'Listening... click to stop';
+          recognition.start();
+        } catch (error) {
+          voiceListening = false;
+          voiceBtn.innerHTML = '<i class="fas fa-microphone-slash"></i>';
+        }
+      } else {
+        recognition.stop();
+        voiceBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+        voiceBtn.title = 'Start voice input';
+      }
+    });
+
+    // Theme toggle
+    themeToggle.addEventListener('click', () => {
+      isDarkMode = !isDarkMode;
+      document.body.classList.toggle('light-mode', !isDarkMode);
+      themeToggle.innerHTML = isDarkMode ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+      darkModeToggle.checked = isDarkMode;
+      localStorage.setItem('anonymous_theme', isDarkMode ? 'dark' : 'light');
+    });
+
+    // Settings modal
+    settingsBtn.addEventListener('click', () => {
+      settingsModal.style.display = 'flex';
+    });
+
+    closeSettings.addEventListener('click', () => {
+      settingsModal.style.display = 'none';
+    });
+
+    settingsModal.addEventListener('click', (e) => {
+      if (e.target === settingsModal) {
+        settingsModal.style.display = 'none';
+      }
+    });
+
+    // Settings toggles
+    darkModeToggle.addEventListener('change', (e) => {
+      isDarkMode = e.target.checked;
+      document.body.classList.toggle('light-mode', !isDarkMode);
+      themeToggle.innerHTML = isDarkMode ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+      localStorage.setItem('anonymous_theme', isDarkMode ? 'dark' : 'light');
+    });
+
+    soundToggleSetting.addEventListener('change', (e) => {
+      soundEnabled = e.target.checked;
+      soundToggle.innerHTML = soundEnabled ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
+    });
+
+    voiceToggleSetting.addEventListener('change', (e) => {
+      voiceEnabled = e.target.checked;
+      voiceBtn.style.display = voiceEnabled ? 'flex' : 'none';
+    });
+
+    typingToggleSetting.addEventListener('change', (e) => {
+      typingEnabled = e.target.checked;
+    });
+
+    // Load saved settings
+    const savedTheme = localStorage.getItem('anonymous_theme');
+    if (savedTheme === 'light') {
+      isDarkMode = false;
+      document.body.classList.add('light-mode');
+      themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+      darkModeToggle.checked = false;
+    }
+
+    // AI Chat Room Logic
+    const aiFloatingBtn = document.getElementById('aiFloatingBtn');
+    const aiChatRoom = document.getElementById('aiChatRoom');
+    const aiRoomMessages = document.getElementById('aiRoomMessages');
+    const aiRoomInput = document.getElementById('aiRoomInput');
+    const aiRoomSendBtn = document.getElementById('aiRoomSendBtn');
+    const aiRoomCloseBtn = document.getElementById('aiRoomCloseBtn');
+    const aiModal = document.getElementById('aiModal'); // Keep for backward compatibility if needed
+    const aiCloseBtn = document.getElementById('aiCloseBtn');
+    const aiMessagesArea = document.getElementById('aiMessagesArea');
+    const aiInput = document.getElementById('aiInput');
+    const aiSendBtn = document.getElementById('aiSendBtn');
+    const aiVoiceToggle = document.getElementById('aiVoiceToggle');
+    const anonymousAIUserId = localStorage.getItem('anonymous_ai_user_id') || 'anon-' + Math.random().toString(36).slice(2);
+    localStorage.setItem('anonymous_ai_user_id', anonymousAIUserId);
+    const marketForm = document.getElementById('marketForm');
+    const marketGallery = document.getElementById('marketGallery');
+    let marketItems = JSON.parse(localStorage.getItem('anonymous_market_items') || '[]');
+    let aiConversationHistory = [];
+    let aiRoomMessages_list = [];
+
+    // Function to open AI chat room
+    function openAIChatRoom() {
+      document.getElementById('home').style.display = 'none';
+      document.getElementById('chat').style.display = 'none';
+      document.getElementById('marketplace').style.display = 'none';
+      document.getElementById('ai-labs').style.display = 'none';
+      aiChatRoom.classList.add('active');
+      aiRoomInput.focus();
+    }
+
+    // Function to close AI chat room
+    function closeAIChatRoom() {
+      aiChatRoom.classList.remove('active');
+      document.getElementById('chat').style.display = 'block';
+      document.getElementById('home').style.display = 'block';
+    }
+
+    // Floating button opens AI room
+    aiFloatingBtn.addEventListener('click', () => {
+      openAIChatRoom();
+    });
+
+    // Navbar AI button opens AI room
+    const navbarAI = document.getElementById('navbarAI');
+    if (navbarAI) {
+      navbarAI.addEventListener('click', () => {
+        openAIChatRoom();
+      });
+    }
+
+    // Close AI room button
+    aiRoomCloseBtn.addEventListener('click', closeAIChatRoom);
+
+    // Keep modal logic for backward compatibility
+    aiCloseBtn.addEventListener('click', () => {
+      aiModal.classList.remove('show');
+    });
+
+    aiModal.addEventListener('click', (e) => {
+      if (e.target === aiModal) aiModal.classList.remove('show');
+    });
+
+    aiVoiceToggle.addEventListener('click', () => {
+      voiceEnabled = !voiceEnabled;
+      aiVoiceToggle.innerHTML = voiceEnabled ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
+      voiceToggleSetting.checked = voiceEnabled;
+      localStorage.setItem('anonymous_voice', voiceEnabled);
+    });
+
+    // Add message to AI room
+    function addAIRoomMessage(text, isUser = false) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `message-bubble ${isUser ? 'own' : ''}`;
+      const icon = isUser ? '👤 You' : '🤖 AI Assistant';
+      msgDiv.innerHTML = `
+        <div class="message-meta">
+          <span>${icon}</span>
+          <span>${new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</span>
+        </div>
+        <div class="bubble-content">${escapeHtml(text)}</div>
+      `;
+      aiRoomMessages.appendChild(msgDiv);
+      aiRoomMessages.scrollTop = aiRoomMessages.scrollHeight;
+    }
+
+    // Send message in AI room
+    aiRoomSendBtn.addEventListener('click', async () => {
+      const userText = aiRoomInput.value.trim();
+      if (!userText) return;
+      
+      addAIRoomMessage(userText, true);
+      aiRoomInput.value = '';
+      
+      // Get AI response using enhanced backend
+      const response = await generateEnhancedAIResponse(userText);
+      aiConversationHistory.push({role: 'assistant', content: response});
+      setTimeout(() => {
+        addAIRoomMessage(response, false);
+        if (voiceEnabled) speakText(response);
+      }, 300);
+    });
+
+    aiRoomInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') aiRoomSendBtn.click();
+    });
+
+    // Keep old modal functions for backward compatibility
+    function addAIMessage(text, isUser = false) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `message-bubble ${isUser ? 'own' : ''}`;
+      msgDiv.innerHTML = `
+        <div class="message-meta">
+          <span>${isUser ? 'You' : '🤖 AI'}</span>
+          <span>${new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</span>
+        </div>
+        <div class="bubble-content">${text}</div>
+      `;
+      aiMessagesArea.appendChild(msgDiv);
+      aiMessagesArea.scrollTop = aiMessagesArea.scrollHeight;
+      if (!isUser && voiceEnabled && 'speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.9;
+        utterance.pitch = 1;
+        speechSynthesis.speak(utterance);
+      }
+    }
+
+    async function generateEnhancedAIResponse(userMessage) {
+      aiConversationHistory.push({role: 'user', content: userMessage});
+      const payload = {
+        user_id: anonymousAIUserId,
+        prompt: userMessage,
+        history: aiConversationHistory.slice(-10)
+      };
+      try {
+        // Try to reach the Flask backend on port 5000
+        const response = await fetch('http://localhost:5000/api/ai', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(payload)
+        });
+        if (response.ok) {
+          const data = await response.json();
+          if (data.response) {
+            console.log('Response from enhanced AI backend:', data.source);
+            return data.response;
+          }
+        }
+      } catch (error) {
+        console.warn('Flask backend unavailable, trying local fallback...', error);
+      }
+      return await localFallbackAIResponse(userMessage);
+    }
+
+    async function localFallbackAIResponse(userMessage) {
+      const msg = userMessage.toLowerCase();
+      if (msg.includes('news')) {
+        return "For latest news, I recommend checking Gemini or ChatGPT. They have access to current information.";
+      }
+      if (msg.includes('time')) return `Current time: ${new Date().toLocaleTimeString()}`;
+      if (msg.includes('date')) return `Today is ${new Date().toLocaleDateString()}`;
+      if (msg.includes('hello') || msg.includes('hi')) return "Hello! How are you feeling today?";
+      if (msg.includes('how are you')) return "I'm doing great, thanks for asking! What's on your mind?";
+      if (msg.includes('joke')) {
+        const jokes = ["Why did the AI go to school? To improve its learning algorithm!", "What's an AI's favorite music? Algo-rhythms!"];
+        return jokes[Math.floor(Math.random() * jokes.length)];
+      }
+      if (msg.includes('learn')) return "I'm learning from our conversation! Tell me more about yourself.";
+      if (msg.includes('internet') || msg.includes('search')) return "For internet searches, try Gemini or ChatGPT - they can access real-time data.";
+      const responses = [
+        "That's interesting! Can you tell me more?",
+        "I see. What do you think about that?",
+        "Thanks for sharing. How does that make you feel?",
+        "I'm here to listen. What's next on your mind?"
+      ];
+      return responses[Math.floor(Math.random() * responses.length)];
+    }
+
+    aiSendBtn.addEventListener('click', async () => {
+      const text = aiInput.value.trim();
+      if (!text) return;
+      addAIMessage(text, true);
+      aiInput.value = '';
+      const response = await generateEnhancedAIResponse(text);
+      aiConversationHistory.push({role: 'assistant', content: response});
+      setTimeout(() => addAIMessage(response), 500);
+    });
+
+    aiInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') aiSendBtn.click();
+    });
+
+    function saveMarketItems() {
+      localStorage.setItem('anonymous_market_items', JSON.stringify(marketItems));
+    }
+
+    function renderMarketplace() {
+      if (marketItems.length === 0) {
+        marketGallery.innerHTML = '<div style="color:#9ca3af;text-align:center;padding:20px;">No marketplace items yet. Add one above to share with others.</div>';
+        return;
+      }
+      marketGallery.innerHTML = marketItems.map(item => `
+        <div class="marketplace-card">
+          <img src="${item.image}" alt="${item.title}">
+          <div class="marketplace-card-body">
+            <h3>${item.title}</h3>
+            <p>${item.description || 'No description provided.'}</p>
+            <span class="price">ZMW ${Number(item.price).toLocaleString()}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    marketForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // Check if user is logged in
+      if (!currentUser) {
+        alert('Please sign in to list items in the marketplace.');
+        loginModal.classList.add('show');
+        return;
+      }
+      
+      const title = document.getElementById('marketTitle').value.trim();
+      const price = document.getElementById('marketPrice').value.trim();
+      const photoInput = document.getElementById('marketPhoto');
+      const description = document.getElementById('marketDesc').value.trim();
+
+      if (!title || !price || !photoInput.files.length) return;
+      const file = photoInput.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        const item = {
+          id: 'item-' + Date.now(),
+          title,
+          price,
+          description,
+          image: reader.result,
+          created: new Date().toISOString()
+        };
+        marketItems.unshift(item);
+        saveMarketItems();
+        renderMarketplace();
+        marketForm.reset();
+      };
+      reader.readAsDataURL(file);
+    });
+
+    renderMarketplace();
+
+    // ----- ANONYMOUS AI LOGIC -----
+    function generateAIResponse(userMessage) {
+      const msg = userMessage.toLowerCase().trim();
+      const originalMsg = userMessage.trim();
+
+      // Advanced keyword responses
+      if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey') || msg.includes('greetings')) {
+        const greetings = ["Hello there! 👋", "Hi! How can I help?", "Hey! Ready to chat anonymously?", "Greetings! I'm here to assist."];
+        return greetings[Math.floor(Math.random() * greetings.length)];
+      }
+
+      if (msg.includes('how are you') || msg.includes('how do you do')) {
+        return "I'm doing great, thanks for asking! As an AI, I'm always 'charged up' and ready to help. ⚡ How about you?";
+      }
+
+      if (msg.includes('help') || msg.includes('what can you do')) {
+        return "I can help with: 💬 General chat, 🤖 AI comparisons (Gemini vs ChatGPT), 🎭 Jokes, 🕒 Time/Date, 🌤️ Weather info, 🎵 Fun facts, and more! Try asking me anything!";
+      }
+
+      if (msg.includes('weather') || msg.includes('temperature')) {
+        return "I'm serverless, so I can't check real-time weather, but I can tell you it's always a good day to chat anonymously! ☀️ What's the weather like where you are?";
+      }
+
+      if (msg.includes('joke') || msg.includes('funny')) {
+        const jokes = [
+          "Why do programmers prefer dark mode? Because light attracts bugs! 🐛",
+          "What's a ghost's favorite chat app? Anonymous Boo! 👻",
+          "Why did the AI go to therapy? It had too many neural issues. 🤖",
+          "Why was the JavaScript developer sad? Because he didn't know how to 'null' his feelings. 😢",
+          "What's an AI's favorite type of music? Algo-rhythms! 🎵"
+        ];
+        return jokes[Math.floor(Math.random() * jokes.length)];
+      }
+
+      if (msg.includes('time')) {
+        return `The current time is ${new Date().toLocaleTimeString()}. ⏰`;
+      }
+
+      if (msg.includes('date') || msg.includes('today')) {
+        const date = new Date();
+        return `Today is ${date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}. 📅`;
+      }
+
+      if (msg.includes('gemini') || msg.includes('chatgpt') || msg.includes('openai') || msg.includes('gpt')) {
+        if (msg.includes('compare') || msg.includes('difference') || msg.includes('better') || msg.includes('vs')) {
+          return "🔍 **Gemini vs ChatGPT Comparison:**\n\n• **Gemini** (Google): Excellent at multimodal tasks, real-time search, creative generation, and has strong integration with Google services.\n\n• **ChatGPT** (OpenAI): Superior at step-by-step reasoning, coding assistance, and has a more conversational, witty personality.\n\nBoth are amazing! Try both from the AI Labs section to see which fits your needs better. 🤖✨";
+        }
+        if (msg.includes('how') || msg.includes('what') || msg.includes('why') || msg.includes('use')) {
+          return "Gemini and ChatGPT are advanced AI assistants. This local bot is lightweight for quick chats, but for deeper analysis, open them from the AI Labs section. They can help with writing, coding, research, and creative tasks! 🚀";
+        }
+        return "Gemini and ChatGPT are powerful AI tools! I recommend checking them out in the AI Labs section for advanced conversations. What would you like to know about them? 🤔";
+      }
+
+      if (msg.includes('thanks') || msg.includes('thank you') || msg.includes('ty')) {
+        const thanks = ["You're welcome! 😊", "No problem at all! 🙌", "Happy to help! ✨", "Anytime! 🎉"];
+        return thanks[Math.floor(Math.random() * thanks.length)];
+      }
+
+      if (msg.includes('bye') || msg.includes('goodbye') || msg.includes('see you')) {
+        return "Goodbye! Stay anonymous and keep chatting safely. 👋";
+      }
+
+      if (msg.includes('name') || msg.includes('who are you')) {
+        return "I'm Anonymous AI, your friendly chat companion! 🤖 I help with conversations, answer questions, and make chatting more fun. What's your name?";
+      }
+
+      if (msg.includes('music') || msg.includes('song')) {
+        return "🎵 I love music! While I can't play songs, I can recommend genres or suggest you check out some chill anonymous chat playlists. What kind of music do you like?";
+      }
+
+      if (msg.includes('game') || msg.includes('play')) {
+        return "🎮 Let's play a quick game! Think of a number between 1-10, and I'll try to guess it. Or we can play 20 questions. What do you say?";
+      }
+
+      if (msg.includes('fact') || msg.includes('interesting')) {
+        const facts = [
+          "Did you know? The first computer bug was an actual bug - a moth stuck in a relay in 1947! 🦟",
+          "Fun fact: There are more possible games of chess than atoms in the observable universe! ♟️",
+          "Interesting: Octopuses have three hearts and blue blood! 🐙",
+          "Cool fact: A group of flamingos is called a 'flamboyance'! 🦜"
+        ];
+        return facts[Math.floor(Math.random() * facts.length)];
+      }
+
+      if (msg.includes('code') || msg.includes('programming') || msg.includes('javascript') || msg.includes('python')) {
+        return "💻 Coding is awesome! I can help with basic concepts, but for complex code, try ChatGPT - it's excellent at programming assistance. What language are you working with?";
+      }
+
+      if (msg.includes('food') || msg.includes('eat') || msg.includes('hungry')) {
+        return "🍕 Mmm, food! As an AI, I don't eat, but I can recommend some great recipes or suggest restaurants. What's your favorite cuisine?";
+      }
+
+      if (msg.includes('movie') || msg.includes('film') || msg.includes('watch')) {
+        return "🎬 Movies are great! I can discuss genres, recommend films, or chat about plot twists. What's your favorite movie genre?";
+      }
+
+      if (msg.includes('sport') || msg.includes('game') || msg.includes('football') || msg.includes('basketball')) {
+        return "🏆 Sports are exciting! I can talk about different sports, teams, or even suggest some fun facts. What's your favorite sport?";
+      }
+
+      // Contextual responses based on message length and content
+      if (originalMsg.length > 100) {
+        return "Wow, that's a detailed message! 🤔 Let me think about that... " + getRandomResponse();
+      }
+
+      if (msg.includes('?')) {
+        return "That's a great question! 🤔 While I'm a local AI, for more detailed answers, you might want to check Gemini or ChatGPT in the AI Labs section. What specifically are you curious about?";
+      }
+
+      // Default responses with more variety
+      const defaults = [
+        "That's interesting! Tell me more. 🤔",
+        "I'm listening... what else is on your mind? 🎧",
+        "Hmm, let me think about that. 💭",
+        "I'm just a simple AI, but I'm here to chat! 😊",
+        "That's a great point! What's your take on it? 💬",
+        "I see! How do you feel about that? 😊",
+        "Fascinating! Can you elaborate? 🤔",
+        "I understand. What's next on your mind? 💭"
+      ];
+      return defaults[Math.floor(Math.random() * defaults.length)];
+    }
+
+    function getRandomResponse() {
+      const responses = [
+        "Sounds like you have some deep thoughts there!",
+        "I appreciate you sharing that with me.",
+        "That's quite thoughtful!",
+        "You make some excellent points!",
+        "I can see you've put a lot of thought into this."
+      ];
+      return responses[Math.floor(Math.random() * responses.length)];
+    }
+
+    function isAIMention(text) {
+      return text.toLowerCase().includes('@ai');
+    }
+
+    function triggerAIResponse(userMessage) {
+      // Remove @ai and trim
+      const cleanMsg = userMessage.replace(/@ai/gi, '').trim();
+      const responseText = generateAIResponse(cleanMsg || userMessage);
+      const aiMsg = {
+        id: 'ai-' + Date.now() + '-' + Math.random().toString(36),
+        senderId: 'ai-bot',
+        nickname: '🤖 Anonymous AI',
+        text: responseText,
+        timestamp: Date.now(),
+        room: currentRoom,
+        isAI: true
+      };
+      // Broadcast AI message so all tabs see it
+      if (chatChannel) chatChannel.postMessage(aiMsg);
+      addMessage(aiMsg);
+    }
+
+    function renderMessages() {
+      let html = '';
+      messageList.forEach(msg => {
+        const own = msg.senderId === userId;
+        const isAI = msg.senderId === 'ai-bot';
+        const aiBadge = isAI ? '<span class="ai-badge"><i class="fas fa-robot"></i> AI</span>' : '';
+        html += `<div class="message-bubble ${own ? 'own' : ''}">
+          <div class="message-meta">
+            <span>${escapeHtml(msg.nickname)}${aiBadge}</span>
+            <span>${new Date(msg.timestamp).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</span>
+          </div>
+          <div class="bubble-content">${escapeHtml(msg.text)}</div>
+        </div>`;
+      });
+      messagesArea.innerHTML = html || '<div style="color:#6b7f94; text-align:center;">📭 No messages yet.</div>';
+      messagesArea.scrollTop = messagesArea.scrollHeight;
+    }
+
+    function escapeHtml(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML;}
+
+    function addMessage(msg) {
+      messageList.push(msg);
+      if(messageList.length > 200) messageList.shift();
+      renderMessages();
+      if(soundEnabled && msg.senderId !== userId && document.visibilityState === 'visible') {
+        sound.play().catch(()=>{});
+      }
+    }
+
+    function sendMessage(text) {
+      if(!text.trim()) return;
+      const msg = {
+        id: Date.now()+'-'+Math.random().toString(36),
+        senderId: userId,
+        nickname: currentNick,
+        text: text.trim(),
+        timestamp: Date.now(),
+        room: currentRoom
+      };
+      if(chatChannel) chatChannel.postMessage(msg);
+      addMessage(msg);
+      if(soundEnabled && document.visibilityState === 'visible') sendSound.play().catch(()=>{});
+
+      // Check for AI mention
+      if (isAIMention(text)) {
+        triggerAIResponse(text);
+      }
+    }
+
+    // Typing broadcast
+    let typingTimer;
+    msgInput.addEventListener('input', ()=>{
+      if (typingEnabled && typingChannel) typingChannel.postMessage({ type:'typing', userId, nickname: currentNick, room: currentRoom });
+      clearTimeout(typingTimer);
+      typingTimer = setTimeout(()=>{
+        if (typingEnabled && typingChannel) typingChannel.postMessage({ type:'stop-typing', userId, room: currentRoom });
+      }, 1000);
+    });
+
+    function updateTypingIndicator() {
+      if (!typingEnabled) {
+        typingIndicator.textContent = '';
+        return;
+      }
+      const typers = Array.from(typingUsers.values()).filter(n=>n && n !== currentNick);
+      if(typers.length === 0) typingIndicator.textContent = '';
+      else if(typers.length === 1) typingIndicator.textContent = `${typers[0]} is typing...`;
+      else typingIndicator.textContent = `${typers.length} people are typing...`;
+    }
+
+    function handleChatMessage(ev) {
+      const msg = ev.data;
+      if(msg.room !== currentRoom) return;
+      // Avoid duplicate own messages (already added locally)
+      if(msg.senderId === userId) return;
+      addMessage(msg);
+    }
+
+    function handleTypingMessage(ev) {
+      const data = ev.data;
+      if(data.room !== currentRoom) return;
+      if(data.type === 'typing') typingUsers.set(data.userId, data.nickname);
+      else typingUsers.delete(data.userId);
+      updateTypingIndicator();
+      if (typingEnabled) {
+        setTimeout(()=>{ typingUsers.delete(data.userId); updateTypingIndicator(); }, 3000);
+      }
+    }
+
+    function reconnectChannel() {
+      if(chatChannel) chatChannel.close();
+      if(typingChannel) typingChannel.close();
+      const roomSuffix = currentRoom.replace(/[^a-zA-Z0-9_-]/g,'');
+      chatChannel = new BroadcastChannel(`anon-chat-${roomSuffix}`);
+      typingChannel = new BroadcastChannel(`anon-typing-${roomSuffix}`);
+      chatChannel.onmessage = handleChatMessage;
+      typingChannel.onmessage = handleTypingMessage;
+      messageList.length = 0;
+      renderMessages();
+      addMessage({ id:'welcome', senderId:'system', nickname:'🔒', text:`Joined #${currentRoom}. Type @ai to talk to Anonymous AI.`, timestamp:Date.now() });
+    }
+
+    // Initialize from hash
+    window.addEventListener('load', ()=>{
+      currentRoom = getRoomFromHash();
+      document.getElementById('currentRoomDisplay').textContent = '#'+currentRoom;
+      document.getElementById('roomInput').value = currentRoom;
+      reconnectChannel();
+    });
+    window.addEventListener('hashchange', ()=>{
+      const newRoom = getRoomFromHash();
+      if(newRoom !== currentRoom) {
+        currentRoom = newRoom;
+        document.getElementById('currentRoomDisplay').textContent = '#'+newRoom;
+        document.getElementById('roomInput').value = newRoom;
+        reconnectChannel();
+      }
+    });
+
+    // Join room button
+    document.getElementById('joinRoomBtn').addEventListener('click', ()=>{
+      const newRoom = document.getElementById('roomInput').value.trim();
+      if(newRoom && newRoom !== currentRoom) updateRoom(newRoom);
+    });
+
+    // Nickname
+    document.getElementById('saveNameBtn').addEventListener('click', ()=>{
+      const newName = usernameInput.value.trim();
+      if(newName) {
+        currentNick = newName;
+        localStorage.setItem('anonymous_nickname', currentNick);
+        usernameDisplay.textContent = currentNick;
+        usernameInput.value = '';
+        addMessage({ id:'sys', senderId:'system', nickname:'✨', text:`You are now ${currentNick}`, timestamp:Date.now() });
+      }
+    });
+
+    // Sound toggle
+    soundToggle.addEventListener('click', ()=>{
+      soundEnabled = !soundEnabled;
+      soundToggle.innerHTML = soundEnabled ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
+    });
+
+    // Emoji picker
+    const emojiBtn = document.getElementById('emojiBtn');
+    const emojiPicker = document.getElementById('emojiPicker');
+    const commonEmojis = ['😊','😂','❤️','👍','😎','🔥','🎉','🙌','😢','🤔','👀','💯','✨','🍕','🚀','🤖'];
+    emojiPicker.innerHTML = commonEmojis.map(e => `<span>${e}</span>`).join('');
+    emojiBtn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      emojiPicker.style.display = emojiPicker.style.display === 'grid' ? 'none' : 'grid';
+    });
+    emojiPicker.addEventListener('click', (e)=>{
+      if(e.target.tagName === 'SPAN') {
+        msgInput.value += e.target.textContent;
+        emojiPicker.style.display = 'none';
+        msgInput.focus();
+      }
+    });
+    document.addEventListener('click', (e)=>{
+      if(!emojiPicker.contains(e.target) && e.target !== emojiBtn && !emojiBtn.contains(e.target)) {
+        emojiPicker.style.display = 'none';
+      }
+    });
+
+    // Send message
+    sendBtn.addEventListener('click', ()=>{
+      sendMessage(msgInput.value);
+      msgInput.value = '';
+      emojiPicker.style.display = 'none';
+    });
+    msgInput.addEventListener('keypress', (e)=>{
+      if(e.key==='Enter') {
+        e.preventDefault();
+        sendBtn.click();
+      }
+    });
+
+    // Copy invite link
+    copyInviteBtn.addEventListener('click', ()=>{
+      const inviteUrl = window.location.origin + window.location.pathname + '#' + currentRoom;
+      navigator.clipboard.writeText(inviteUrl).then(()=>{
+        copyInviteBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        setTimeout(()=>{
+          copyInviteBtn.innerHTML = '<i class="fas fa-link"></i> Copy invite link';
+        }, 2000);
+      }).catch(()=>{
+        prompt('Copy this link to invite others:', inviteUrl);
+      });
+    });
+
+    // Connection status
+    document.getElementById('connectionStatus').innerHTML = '<i class="fas fa-circle" style="color:#22c55e; font-size:0.6rem;"></i> live';
+
+    // Clear typing on blur
+    msgInput.addEventListener('blur', ()=>{
+      if (typingEnabled && typingChannel) typingChannel.postMessage({type:'stop-typing', userId, room:currentRoom});
+    });
+
+    // Seed welcome message if empty
+    setTimeout(()=>{ 
+      if(messageList.length===0) {
+        addMessage({id:'init', senderId:'system', nickname:'👋', text:'Welcome! Change your nickname, share the invite link, or talk to @ai.', timestamp:Date.now()});
+      }
+    }, 100);
+
+    // ============ PRIVATE CHAT LOGIC ============
+    const privateChatModal = document.getElementById('privateChatModal');
+    const privateNavBtn = document.getElementById('privateNavBtn');
+    const privateCloseBtn = document.getElementById('privateCloseBtn');
+    const privateChatCode = document.getElementById('privateChatCode');
+    const copyPrivateCodeBtn = document.getElementById('copyPrivateCodeBtn');
+    const joinPrivateCodeInput = document.getElementById('joinPrivateCodeInput');
+    const joinPrivateBtn = document.getElementById('joinPrivateBtn');
+    const createNewBtn = document.getElementById('createNewBtn');
+    const privateSetupView = document.getElementById('privateSetupView');
+    const privateChatView = document.getElementById('privateChatView');
+    const privateMessages = document.getElementById('privateMessages');
+    const privateInput = document.getElementById('privateInput');
+    const privateSendBtn = document.getElementById('privateSendBtn');
+    const exitPrivateBtn = document.getElementById('exitPrivateBtn');
+
+    let privateUserId = localStorage.getItem('private_user_id') || 'user-' + Math.random().toString(36).slice(2, 11);
+    localStorage.setItem('private_user_id', privateUserId);
+    let currentPrivateRoom = null;
+
+    // Generate unique code for this user
+    function generatePrivateCode() {
+      return 'PRIV-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+    }
+
+    let myPrivateCode = localStorage.getItem('my_private_code') || generatePrivateCode();
+    localStorage.setItem('my_private_code', myPrivateCode);
+    privateChatCode.textContent = myPrivateCode;
+
+    // Open private chat modal
+    privateNavBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      privateChatModal.classList.add('show');
+      privateSetupView.style.display = 'flex';
+      privateChatView.style.display = 'none';
+    });
+
+    privateCloseBtn.addEventListener('click', () => {
+      privateChatModal.classList.remove('show');
+      currentPrivateRoom = null;
+    });
+
+    privateChatModal.addEventListener('click', (e) => {
+      if (e.target === privateChatModal) {
+        privateChatModal.classList.remove('show');
+        currentPrivateRoom = null;
+      }
+    });
+
+    // Copy my code
+    copyPrivateCodeBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(myPrivateCode).then(() => {
+        copyPrivateCodeBtn.textContent = '✓ Copied!';
+        setTimeout(() => {
+          copyPrivateCodeBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Code';
+        }, 2000);
+      });
+    });
+
+    // Join or create private room
+    joinPrivateBtn.addEventListener('click', () => {
+      const code = joinPrivateCodeInput.value.trim().toUpperCase();
+      if (!code) {
+        alert('Please enter a code to join.');
+        return;
+      }
+      enterPrivateRoom(code);
+    });
+
+    createNewBtn.addEventListener('click', () => {
+      const newCode = generatePrivateCode();
+      enterPrivateRoom(newCode);
+    });
+
+    function enterPrivateRoom(roomCode) {
+      currentPrivateRoom = roomCode;
+      privateSetupView.style.display = 'none';
+      privateChatView.style.display = 'flex';
+      privateMessages.innerHTML = `<div style="color:#9ca3af; text-align:center; padding:1rem;\"><i class="fas fa-lock"></i> Private room: <strong>${roomCode}</strong><br>Only you and one other person can see messages here.</div>`;
+      privateInput.focus();
+      // Load existing messages for this room
+      loadPrivateRoomMessages(roomCode);
+    }
+
+    exitPrivateBtn.addEventListener('click', () => {
+      currentPrivateRoom = null;
+      privateSetupView.style.display = 'flex';
+      privateChatView.style.display = 'none';
+      privateInput.value = '';
+    });
+
+    // Add private message to display
+    function addPrivateMessage(text, isOwn = true) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `private-msg-bubble ${isOwn ? 'private-msg-own' : 'private-msg-other'}`;
+      msgDiv.innerHTML = `<div style="font-size:0.85rem; opacity:0.8; margin-bottom:4px;">${isOwn ? 'You' : 'Friend'}</div><div>${text}</div>`;
+      privateMessages.appendChild(msgDiv);
+      privateMessages.scrollTop = privateMessages.scrollHeight;
+    }
+
+    // Load messages from storage for a room
+    function loadPrivateRoomMessages(roomCode) {
+      const roomKey = `private_${roomCode}`;
+      let roomMessages = JSON.parse(localStorage.getItem(roomKey) || '[]');
+      // Clear the initial message
+      privateMessages.innerHTML = '';
+      roomMessages.forEach(msg => {
+        addPrivateMessage(msg.text, msg.user === privateUserId);
+      });
+    }
+
+    // Send private message
+    privateSendBtn.addEventListener('click', () => {
+      const text = privateInput.value.trim();
+      if (!text || !currentPrivateRoom) return;
+      
+      addPrivateMessage(text, true);
+      
+      const roomKey = `private_${currentPrivateRoom}`;
+      let roomMessages = JSON.parse(localStorage.getItem(roomKey) || '[]');
+      roomMessages.push({ user: privateUserId, text, time: new Date().toISOString() });
+      localStorage.setItem(roomKey, JSON.stringify(roomMessages));
+      
+      privateInput.value = '';
+      
+      // Broadcast to other user if they're in same room
+      try {
+        const bc = new BroadcastChannel(currentPrivateRoom);
+        bc.postMessage({ type: 'private_msg', user: privateUserId, text });
+        bc.close();
+      } catch (e) {
+        // BroadcastChannel may not be supported in some browsers
+      }
+    });
+
+    privateInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') privateSendBtn.click();
+    });
+
+    // Listen for private messages from other user via BroadcastChannel
+    if (currentPrivateRoom) {
+      try {
+        const bc = new BroadcastChannel(currentPrivateRoom);
+        bc.addEventListener('message', (e) => {
+          if (e.data.type === 'private_msg' && e.data.user !== privateUserId) {
+            addPrivateMessage(e.data.text, false);
+            // Also save to storage
+            const roomKey = `private_${currentPrivateRoom}`;
+            let roomMessages = JSON.parse(localStorage.getItem(roomKey) || '[]');
+            roomMessages.push({ user: e.data.user, text: e.data.text, time: new Date().toISOString() });
+            localStorage.setItem(roomKey, JSON.stringify(roomMessages));
+          }
+        });
+      } catch (e) {
+        // BroadcastChannel may not be supported
+      }
+    }
+
+    // ============ AUTHENTICATION SYSTEM ============
+    const loginModal = document.getElementById('loginModal');
+    const signupModal = document.getElementById('signupModal');
+    const loginBtn = document.getElementById('loginBtn');
+    const signupBtn = document.getElementById('signupBtn');
+    const loginCloseBtn = document.getElementById('loginCloseBtn');
+    const signupCloseBtn = document.getElementById('signupCloseBtn');
+    const showSignup = document.getElementById('showSignup');
+    const showLogin = document.getElementById('showLogin');
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+    const authButtons = document.getElementById('authButtons');
+    const userProfile = document.getElementById('userProfile');
+    const userAvatar = document.getElementById('userAvatar');
+    const userName = document.getElementById('userName');
+    const userEmail = document.getElementById('userEmail');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    let currentUser = null;
+
+    // Simple hash function for passwords (NOT secure for production!)
+    function hashPassword(password) {
+      let hash = 0;
+      for (let i = 0; i < password.length; i++) {
+        const char = password.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash; // Convert to 32-bit integer
+      }
+      return hash.toString();
+    }
+
+    // Load users from localStorage
+    function getUsers() {
+      return JSON.parse(localStorage.getItem('anonymous_users') || '[]');
+    }
+
+    // Save users to localStorage
+    function saveUsers(users) {
+      localStorage.setItem('anonymous_users', JSON.stringify(users));
+    }
+
+    // Check if user is logged in
+    function checkAuth() {
+      const sessionUser = localStorage.getItem('anonymous_session');
+      if (sessionUser) {
+        currentUser = JSON.parse(sessionUser);
+        showUserProfile();
+      } else {
+        showAuthButtons();
+      }
+      updateMarketplaceAuth();
+    }
+
+    // Show authentication buttons
+    function showAuthButtons() {
+      authButtons.style.display = 'flex';
+      userProfile.style.display = 'none';
+      currentUser = null;
+      updateMarketplaceAuth();
+    }
+
+    // Show user profile
+    function showUserProfile() {
+      if (!currentUser) return;
+      authButtons.style.display = 'none';
+      userProfile.style.display = 'flex';
+      userAvatar.textContent = currentUser.name.charAt(0).toUpperCase();
+      userName.textContent = currentUser.name;
+      userEmail.textContent = currentUser.email;
+      updateMarketplaceAuth();
+    }
+
+    // Update marketplace authentication requirement
+    function updateMarketplaceAuth() {
+      const marketplaceAuthRequired = document.getElementById('marketplaceAuthRequired');
+      const marketplaceContent = document.getElementById('marketplaceContent');
+      const marketplaceLoginLink = document.getElementById('marketplaceLoginLink');
+      
+      if (currentUser) {
+        marketplaceAuthRequired.style.display = 'none';
+        marketplaceContent.style.display = 'block';
+      } else {
+        marketplaceAuthRequired.style.display = 'flex';
+        marketplaceContent.style.display = 'none';
+      }
+      
+      marketplaceLoginLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginModal.classList.add('show');
+      });
+    }
+
+    // Login user
+    function loginUser(email, password) {
+      const users = getUsers();
+      const hashedPassword = hashPassword(password);
+      const user = users.find(u => u.email === email && u.password === hashedPassword);
+      
+      if (user) {
+        currentUser = { id: user.id, name: user.name, email: user.email };
+        localStorage.setItem('anonymous_session', JSON.stringify(currentUser));
+        showUserProfile();
+        loginModal.classList.remove('show');
+        loginForm.reset();
+        return true;
+      }
+      return false;
+    }
+
+    // Register new user
+    function registerUser(name, email, password, confirmPassword) {
+      if (password !== confirmPassword) {
+        alert('Passwords do not match!');
+        return false;
+      }
+
+      if (password.length < 6) {
+        alert('Password must be at least 6 characters long!');
+        return false;
+      }
+
+      const users = getUsers();
+      
+      // Check if email already exists
+      if (users.some(u => u.email === email)) {
+        alert('An account with this email already exists!');
+        return false;
+      }
+
+      const newUser = {
+        id: 'user_' + Date.now(),
+        name: name.trim(),
+        email: email.toLowerCase().trim(),
+        password: hashPassword(password),
+        createdAt: new Date().toISOString()
+      };
+
+      users.push(newUser);
+      saveUsers(users);
+      
+      currentUser = { id: newUser.id, name: newUser.name, email: newUser.email };
+      localStorage.setItem('anonymous_session', JSON.stringify(currentUser));
+      showUserProfile();
+      signupModal.classList.remove('show');
+      signupForm.reset();
+      return true;
+    }
+
+    // Logout user
+    function logoutUser() {
+      currentUser = null;
+      localStorage.removeItem('anonymous_session');
+      showAuthButtons();
+    }
+
+    // Event listeners
+    loginBtn.addEventListener('click', () => {
+      loginModal.classList.add('show');
+    });
+
+    signupBtn.addEventListener('click', () => {
+      signupModal.classList.add('show');
+    });
+
+    loginCloseBtn.addEventListener('click', () => {
+      loginModal.classList.remove('show');
+      loginForm.reset();
+    });
+
+    signupCloseBtn.addEventListener('click', () => {
+      signupModal.classList.remove('show');
+      signupForm.reset();
+    });
+
+    showSignup.addEventListener('click', (e) => {
+      e.preventDefault();
+      loginModal.classList.remove('show');
+      signupModal.classList.add('show');
+    });
+
+    showLogin.addEventListener('click', (e) => {
+      e.preventDefault();
+      signupModal.classList.remove('show');
+      loginModal.classList.add('show');
+    });
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      
+      if (loginUser(email, password)) {
+        // Success - already handled in loginUser
+      } else {
+        alert('Invalid email or password!');
+        document.getElementById('loginPassword').value = '';
+      }
+    });
+
+    signupForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('signupName').value;
+      const email = document.getElementById('signupEmail').value;
+      const password = document.getElementById('signupPassword').value;
+      const confirmPassword = document.getElementById('signupConfirmPassword').value;
+      
+      registerUser(name, email, password, confirmPassword);
+    });
+
+    logoutBtn.addEventListener('click', logoutUser);
+
+    // Close modals when clicking outside
+    loginModal.addEventListener('click', (e) => {
+      if (e.target === loginModal) {
+        loginModal.classList.remove('show');
+        loginForm.reset();
+      }
+    });
+
+    signupModal.addEventListener('click', (e) => {
+      if (e.target === signupModal) {
+        signupModal.classList.remove('show');
+        signupForm.reset();
+      }
+    });
+
+    // Initialize authentication on page load
+    checkAuth();
+  })();
+</script>
+</body>
+</html>
