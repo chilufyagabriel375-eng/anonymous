@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +39,7 @@
     h1{font-size:2.5rem;font-weight:600;background:linear-gradient(to right,#e0e7ff,#bdd3ff);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:1.5rem}
     h2{font-size:1.8rem;margin-bottom:1rem;color:#f1f5f9}
     .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem}
-    .glass-card{background:rgba(20,28,36,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:28px;padding:2rem;border:1px solid rgba(255,255,255,0.05);transition:transform 0.2s}
+    .glass-card{background:rgba(20,28,36,0.7);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-radius:28px;padding:2rem;border:1px solid rgba(255,255,255,0.05);transition:transform 0.2s}
     .glass-card:hover{transform:translateY(-4px);border-color:rgba(167,139,250,0.3)}
     .glass-card i{font-size:2rem;color:#a78bfa;margin-bottom:1rem}
     .chat-header-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;flex-wrap:wrap;gap:1rem}
@@ -63,7 +64,7 @@
     .voice-btn{width:44px;height:44px;display:flex;align-items:center;justify-content:center}
     .theme-toggle{background:transparent;border:none;color:#9aaec2;font-size:1.3rem;cursor:pointer;padding:8px;border-radius:50%;transition:0.2s;margin-left:10px}
     .theme-toggle:hover{background:#2d3b4a;color:#cbd5e1}
-    .settings-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:none;z-index:2000;align-items:center;justify-content:center}
+    .settings-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:none;z-index:2000;align-items:center;justify-content:center}
     .settings-content{background:#1e293b;border-radius:24px;padding:2rem;max-width:500px;width:90%;border:1px solid #3b4e62}
     .settings-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
     .settings-header h2{color:#e2e8f0;margin:0}
@@ -301,92 +302,9 @@
       .chat-container,.private-chat-content{height:auto;max-height:calc(100vh - 100px)}
       h1{font-size:1.8rem;margin-bottom:0.8rem}
     }
-
-    /* Page Navigation & Friends System */
-    .page-container{display:none;animation:fadeIn 0.3s ease-in}
-    .page-container.active{display:block}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-    
-    .nav-links a{cursor:pointer}
-    .nav-links a.active{color:#a78bfa;border-bottom-color:#a78bfa}
-
-    /* Friends Panel */
-    .friends-panel{background:rgba(20,28,36,0.7);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-radius:28px;padding:1.5rem;border:1px solid rgba(255,255,255,0.05);margin-bottom:2rem}
-    .friends-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
-    .friends-header h3{margin:0;color:#e2e8f0;display:flex;align-items:center;gap:10px}
-    .friends-count{background:#4f46e5;color:white;padding:4px 12px;border-radius:20px;font-size:0.85rem;font-weight:600}
-    .friends-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem}
-    .friend-card{background:#1e293b;border:1px solid #374a5e;border-radius:16px;padding:1rem;text-align:center;cursor:pointer;transition:0.2s}
-    .friend-card:hover{background:#263449;border-color:#4f46e5;transform:translateY(-2px)}
-    .friend-avatar{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#8b5cf6,#a78bfa);display:flex;align-items:center;justify-content:center;color:white;font-weight:600;font-size:1.2rem;margin:0 auto 0.75rem}
-    .friend-name{color:#e2e8f0;font-weight:600;margin-bottom:0.5rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .friend-status{color:#9ca3af;font-size:0.85rem;margin-bottom:0.75rem}
-    .friend-actions{display:flex;gap:6px;justify-content:center}
-    .friend-btn{background:#4f46e5;border:none;color:white;padding:6px 12px;border-radius:12px;font-size:0.8rem;cursor:pointer;transition:0.2s;flex:1}
-    .friend-btn:hover{background:#6366f1}
-    .friend-btn.danger{background:#ef4444}
-    .friend-btn.danger:hover{background:#dc2626}
-
-    /* Add Friends Section */
-    .add-friends-section{background:rgba(20,28,36,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:28px;padding:1.5rem;border:1px solid rgba(255,255,255,0.05);margin-bottom:2rem}
-    .add-friends-section h3{margin-top:0;color:#e2e8f0}
-    .friend-search-box{display:flex;gap:10px;margin-bottom:1.5rem}
-    .friend-search-box input{flex:1;background:#1b2532;border:1px solid #374a5e;border-radius:20px;padding:12px 16px;color:white;outline:none}
-    .friend-search-box button{background:#4f46e5;border:none;color:white;padding:12px 24px;border-radius:20px;cursor:pointer;font-weight:600;transition:0.2s}
-    .friend-search-box button:hover{background:#6366f1}
-    .search-results{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem}
-    .search-result{background:#1e293b;border:1px solid #374a5e;border-radius:16px;padding:1.2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
-    .result-info{flex:1}
-    .result-name{color:#e2e8f0;font-weight:600;margin-bottom:0.25rem}
-    .result-status{color:#9ca3af;font-size:0.85rem}
-    .add-friend-btn{background:#34d399;border:none;color:white;padding:8px 16px;border-radius:12px;cursor:pointer;font-weight:600;transition:0.2s;white-space:nowrap}
-    .add-friend-btn:hover{background:#2eb898}
-    .add-friend-btn.pending{background:#f59e0b;cursor:not-allowed}
-    .add-friend-btn.friends{background:#9ca3af;cursor:not-allowed}
-
-    /* Friend Requests */
-    .friend-requests{background:rgba(20,28,36,0.7);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-radius:28px;padding:1.5rem;border:1px solid rgba(255,255,255,0.05);margin-bottom:2rem}
-    .friend-requests h3{margin-top:0;color:#e2e8f0;display:flex;align-items:center;gap:10px}
-    .request-count-badge{background:#ef4444;color:white;padding:4px 10px;border-radius:20px;font-size:0.8rem;font-weight:600}
-    .requests-list{display:flex;flex-direction:column;gap:1rem}
-    .request-item{background:#1e293b;border:1px solid #374a5e;border-radius:16px;padding:1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
-    .request-user{display:flex;align-items:center;gap:12px;flex:1}
-    .request-user-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#8b5cf6,#a78bfa);display:flex;align-items:center;justify-content:center;color:white;font-weight:600;font-size:1rem}
-    .request-user-info h4{margin:0;color:#e2e8f0;font-size:0.95rem}
-    .request-actions{display:flex;gap:8px}
-    .request-btn{border:none;padding:8px 16px;border-radius:12px;cursor:pointer;font-weight:600;transition:0.2s;font-size:0.85rem}
-    .request-btn.accept{background:#34d399;color:white}
-    .request-btn.accept:hover{background:#2eb898}
-    .request-btn.reject{background:#ef4444;color:white}
-    .request-btn.reject:hover{background:#dc2626}
-
-    /* Friend Profile Modal */
-    .friend-profile-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:none;z-index:2000;align-items:center;justify-content:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
-    .friend-profile-modal.show{display:flex}
-    .friend-profile-content{background:linear-gradient(180deg,rgba(15,20,26,0.98),rgba(10,14,20,0.98));border-radius:24px;border:1px solid #2e3a48;width:90%;max-width:500px;padding:2rem;display:flex;flex-direction:column;gap:1.5rem;box-shadow:0 24px 80px rgba(0,0,0,0.3)}
-    .profile-close-btn{position:absolute;top:20px;right:20px;background:none;border:none;color:#9ca3af;font-size:1.5rem;cursor:pointer;padding:8px}
-    .profile-header{text-align:center;border-bottom:1px solid #2e3a48;padding-bottom:1.5rem}
-    .profile-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#8b5cf6,#a78bfa);display:flex;align-items:center;justify-content:center;color:white;font-weight:600;font-size:2rem;margin:0 auto 1rem}
-    .profile-name{color:#e2e8f0;font-size:1.5rem;font-weight:600;margin:0}
-    .profile-status{color:#9ca3af;font-size:0.9rem;margin-top:0.5rem}
-    .profile-section{padding:1rem 0;border-bottom:1px solid #2e3a48}
-    .profile-section:last-child{border-bottom:none}
-    .profile-section h4{color:#a78bfa;font-size:0.9rem;margin:0 0 0.75rem 0;text-transform:uppercase;letter-spacing:0.5px}
-    .profile-info{color:#cbd5e1;font-size:0.95rem;line-height:1.6}
-    .profile-actions{display:flex;gap:1rem;justify-content:center;padding-top:1rem}
-    .profile-action-btn{background:#4f46e5;border:none;color:white;padding:12px 24px;border-radius:20px;cursor:pointer;font-weight:600;transition:0.2s;flex:1}
-    .profile-action-btn:hover{background:#6366f1}
-    .profile-action-btn.danger{background:#ef4444}
-    .profile-action-btn.danger:hover{background:#dc2626}
-
-    /* No Friends Message */
-    .empty-state{text-align:center;padding:3rem 1rem;color:#9ca3af}
-    .empty-state i{font-size:3rem;color:#4f46e5;margin-bottom:1rem;opacity:0.5}
-    .empty-state p{margin:0;font-size:1.1rem}
-
     /* Light Mode Styles */
     body.light-mode{background:#f8fafc;color:#1e293b}
-    body.light-mode .navbar{background:rgba(255,255,255,0.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.05)}
+    body.light-mode .navbar{background:rgba(255,255,255,0.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.05)}
     body.light-mode .logo{color:#1e293b}
     body.light-mode .logo-sub{color:#64748b}
     body.light-mode .nav-links a{color:#475569;border-bottom-color:transparent}
@@ -425,12 +343,12 @@
     </div>
   </div>
   <ul class="nav-links" id="navLinks">
-    <li><a href="#" data-page="home">Home</a></li>
-    <li><a href="#" data-page="chat">Chat</a></li>
-    <li><a href="#" data-page="friends">Friends</a></li>
-    <li><a href="#" data-page="marketplace">Marketplace</a></li>
-    <li><a href="#" data-page="ai-labs">AI Labs</a></li>
-    <li><a href="#" id="privateNavBtn" style="color:#34d399;"><i class="fas fa-lock"></i> Private</a></li>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#chat">Chat</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#marketplace">Marketplace</a></li>
+    <li><a href="#main-menu">Main Menu</a></li>
+    <li><a href="#" id="privateNavBtn" style="color:#34d399;"><i class="fas fa-lock"></i> Private Chat</a></li>
   </ul>
   <div class="hamburger" id="hamburger">
     <span class="bar"></span><span class="bar"></span><span class="bar"></span>
@@ -494,9 +412,8 @@
 </div>
 
 <main>
-  <!-- Home Page -->
-  <div id="home-page" class="page-container active">
-    <section id="home">
+  <!-- Home Section -->
+  <section id="home">
     <h1><i class="fas fa-mask"></i> private rooms · AI assistant · invites</h1>
     <div class="feature-grid">
       <div class="glass-card">
@@ -557,10 +474,10 @@
       <div class="chat-input-area">
         <div class="input-wrapper">
           <input type="text" id="messageInput" placeholder="Type a message... (try @ai hello or ask about Gemini)" autocomplete="off" />
-          <button class="emoji-btn" id="emojiBtn" type="button" title="Insert emoji" aria-label="Insert emoji"><i class="far fa-smile"></i></button>
+          <button type="button" class="emoji-btn" id="emojiBtn" title="Open emoji picker"><i class="far fa-smile"></i></button>
         </div>
         <button class="voice-btn" id="voiceBtn" title="Voice input"><i class="fas fa-microphone"></i></button>
-        <button class="send-btn" id="sendBtn" type="button" title="Send message" aria-label="Send message"><i class="fas fa-paper-plane"></i></button>
+        <button type="button" class="send-btn" id="sendBtn" title="Send message"><i class="fas fa-paper-plane"></i></button>
       </div>
 
       <div class="settings-bar">
@@ -586,7 +503,7 @@
     </div>
     <p style="margin-top:1rem; color:#9aabbe;"><i class="fas fa-sync-alt"></i> Open multiple tabs to test – messages sync locally.</p>
   </section>
-  <link:html></link:html>
+
   <!-- Services Section -->
   <section id="services">
     <h1><i class="fas fa-cogs"></i> Services</h1>
@@ -647,8 +564,7 @@
         <form class="marketplace-form" id="marketForm">
           <input type="text" id="marketTitle" placeholder="Item title" required />
           <input type="number" id="marketPrice" placeholder="Price (ZMW)" min="0" step="1" required />
-          <label for="marketPhoto" style="color:#9ca3af; margin-bottom:0.3rem; display:block;">Upload photo</label>
-          <input type="file" id="marketPhoto" accept="image/*" required title="Upload a photo of your item" />
+          <input type="file" id="marketPhoto" accept="image/*" required title="Upload item photo" />
           <textarea id="marketDesc" placeholder="Item description"></textarea>
           <button type="submit">List Item</button>
         </form>
@@ -793,43 +709,13 @@
     // UI: Mobile menu toggle
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.getElementById('navLinks');
-    const navItems = document.querySelectorAll('.nav-links a[data-page]');
-
-    function setActiveNavLink(pageId) {
-      navItems.forEach(link => {
-        if (link.dataset.page === pageId) link.classList.add('active');
-        else link.classList.remove('active');
-      });
-    }
-
-    function navigateToSection(pageId) {
-      const section = document.getElementById(pageId);
-      if (!section) return;
-      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setActiveNavLink(pageId);
-      hamburger.classList.remove('active');
-      navLinks.classList.remove('active');
-    }
-
     hamburger.addEventListener('click', ()=>{
       hamburger.classList.toggle('active');
       navLinks.classList.toggle('active');
     });
-
-    navItems.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        navigateToSection(link.dataset.page);
-      });
-    });
-
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', ()=>{
-        hamburger.classList.remove('active'); navLinks.classList.remove('active');
-      });
-    });
-
-    setActiveNavLink('home');
+    document.querySelectorAll('.nav-links a').forEach(l=>l.addEventListener('click',()=>{
+      hamburger.classList.remove('active'); navLinks.classList.remove('active');
+    }));
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // ---------- CHAT ENGINE (BroadcastChannel) ----------
@@ -1108,17 +994,6 @@
         utterance.lang = 'en-US';
         utterance.rate = 0.9;
         utterance.pitch = 1;
-        speechSynthesis.speak(utterance);
-      }
-    }
-
-    function speakText(text) {
-      if ('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-US';
-        utterance.rate = 0.9;
-        utterance.pitch = 1;
-        speechSynthesis.cancel();
         speechSynthesis.speak(utterance);
       }
     }
