@@ -1,0 +1,11 @@
+# Wrangler config for Cloudflare Workers + Durable Objects
+# Fill in account_id and your preferred name before deploying.
+name = "anonymous-chat-worker"
+type = "javascript"
+account_id = "<YOUR_ACCOUNT_ID>"
+workers_dev = true
+compatibility_date = "2026-01-01"
+
+[[durable_objects.bindings]]
+name = "ROOMS"
+class_name = "Room"
