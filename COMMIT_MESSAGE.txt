@@ -1,0 +1,1 @@
+Added realtime Node backend (Express + Socket.io), SQLite DB, auth, friends, uploads, marketplace endpoints, Dockerfile and client socket helper
